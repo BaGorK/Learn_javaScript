@@ -1,6 +1,7 @@
 ##  "The Complete JavaScript Course 2023: From Zero to Expert!"
 ### About The Course
 ![](img1.jpg)
+
 _first_: This is a Udemy course created by Jonas Schmedtmann.
 
 _second_: It is one of the most popular courses on the platform, with over 100,000 students enrolled. The course covers everything from the basics of JavaScript to more advanced topics. (_that's enough_) 
