@@ -18,7 +18,6 @@
   </a>
 </p>
 
-```dif
 
 ! _first_: 
 * This is a Udemy course created by Jonas Schmedtmann.
@@ -26,7 +25,6 @@
 ! _second_: 
 * It is one of the most popular courses on the platform, with over 100,000 students enrolled. The course covers everything from the basics of JavaScript to more advanced topics. (_that's enough_)
 
-```
 
 <h3 align="center">
 
@@ -36,6 +34,6 @@
 
 
 > You need to code along with me! You will learn ZERO JavaScript skills by just sitting and watching me code. You have to code YOURSELF!.  
-he told himself(Jonas)
 
+_he told himself(Jonas)_
 so I created this repo to code along with him.
