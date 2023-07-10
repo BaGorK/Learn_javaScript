@@ -1,7 +1,11 @@
 ##  "The Complete JavaScript Course 2023: From Zero to Expert!"
 ### About The Course
 
-[<img src="img1.jpg" width="300">](https://www.udemy.com/course/the-complete-javascript-course/?utm_source=adwords&utm_medium=udemyads&utm_campaign=WebDevelopment_Search_la.EN_cc.US_PP_Control&utm_content=deal4584&utm_term=_._ag_141124571212_._ad_594266300082_._kw__._de_c_._dm__._pl__._ti_dsa-1652654191345_._li_2840_._pd__._&matchtype=&gclid=CjwKCAjw2K6lBhBXEiwA5RjtCXGsQSHdl6PPlEV-P6yQRH6r7ufhxEatCpGhykbqt7kp3HRAygRyjRoCNxEQAvD_BwE)
+<p align="center">
+  <a href="https://www.udemy.com/course/the-complete-javascript-course/?utm_source=adwords&utm_medium=udemyads&utm_campaign=WebDevelopment_Search_la.EN_cc.US_PP_Control&utm_content=deal4584&utm_term=_._ag_141124571212_._ad_594266300082_._kw__._de_c_._dm__._pl__._ti_dsa-1652654191345_._li_2840_._pd__._&matchtype=&gclid=CjwKCAjw2K6lBhBXEiwA5RjtCXGsQSHdl6PPlEV-P6yQRH6r7ufhxEatCpGhykbqt7kp3HRAygRyjRoCNxEQAvD_BwE">
+    <img src="img1.jpg" width="400" alt="Course Image">
+  </a>
+</p>
 
 
 _first_: This is a Udemy course created by Jonas Schmedtmann.
