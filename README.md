@@ -19,10 +19,10 @@
 </p>
 
 
-! _first_: 
+_first_: 
 * This is a Udemy course created by Jonas Schmedtmann.
 
-! _second_: 
+_second_: 
 * It is one of the most popular courses on the platform, with over 100,000 students enrolled. The course covers everything from the basics of JavaScript to more advanced topics. (_that's enough_)
 
 
@@ -35,5 +35,5 @@
 
 > You need to code along with me! You will learn ZERO JavaScript skills by just sitting and watching me code. You have to code YOURSELF!.  
 
-_he told himself(Jonas)_
-so I created this repo to code along with him.
+_he told himself(Jonas)._
+ So I created this repo to code along with him.
