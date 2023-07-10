@@ -1,14 +1,16 @@
-<center>
+<h2 align="center">
 
 ##  "The Complete JavaScript Course 2023: From Zero to Expert!"
 
-</center>
+</h2>
 
-<center>
+<h3 align="center">
 
 ### About The Course
 
-</center>
+
+</h3>
+
 
 <p align="center">
   <a href="https://www.udemy.com/course/the-complete-javascript-course/?utm_source=adwords&utm_medium=udemyads&utm_campaign=WebDevelopment_Search_la.EN_cc.US_PP_Control&utm_content=deal4584&utm_term=_._ag_141124571212_._ad_594266300082_._kw__._de_c_._dm__._pl__._ti_dsa-1652654191345_._li_2840_._pd__._&matchtype=&gclid=CjwKCAjw2K6lBhBXEiwA5RjtCXGsQSHdl6PPlEV-P6yQRH6r7ufhxEatCpGhykbqt7kp3HRAygRyjRoCNxEQAvD_BwE">
@@ -16,16 +18,22 @@
   </a>
 </p>
 
+```dif
 
-_first_: This is a Udemy course created by Jonas Schmedtmann.
+! _first_: 
+* This is a Udemy course created by Jonas Schmedtmann.
 
-_second_: It is one of the most popular courses on the platform, with over 100,000 students enrolled. The course covers everything from the basics of JavaScript to more advanced topics. (_that's enough_) 
+! _second_: 
+* It is one of the most popular courses on the platform, with over 100,000 students enrolled. The course covers everything from the basics of JavaScript to more advanced topics. (_that's enough_)
 
-<center>
+<h3 align="center">
 
 ### About The Repository
 
-</center>
-_" You need to code along with me! You will learn ZERO JavaScript skills by just sitting and watching me code. You have to code YOURSELF! "_ he told himself(Jonas).
+</h3>
+
+
+> You need to code along with me! You will learn ZERO JavaScript skills by just sitting and watching me code. You have to code YOURSELF!.  
+he told himself(Jonas)
 
 so I created this repo to code along with him.
