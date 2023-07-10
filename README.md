@@ -26,6 +26,8 @@
 ! _second_: 
 * It is one of the most popular courses on the platform, with over 100,000 students enrolled. The course covers everything from the basics of JavaScript to more advanced topics. (_that's enough_)
 
+```
+
 <h3 align="center">
 
 ### About The Repository
