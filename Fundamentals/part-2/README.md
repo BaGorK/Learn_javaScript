@@ -30,6 +30,9 @@
 
 * Iteration: using The for/while loop
   - Looping over arrays
+
     > Breake statement
+
       Continue statement
+      
   - Coding Challenge 3 on arrays
