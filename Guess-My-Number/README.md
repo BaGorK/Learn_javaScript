@@ -37,8 +37,3 @@
 <p align="center">
     <img src="images/img4-correcte.png" width="550" alt="Course Image">
 </p>
-
-
-### Live demo
-
-> You can test it be clicking [here]().
