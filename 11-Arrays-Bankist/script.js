@@ -314,7 +314,7 @@ const max = movements.reduce((acc, mov) => {
   else return mov;
 }, movements[0]);
 console.log(max);
-*/
+
 
 // The magic of chaining methods
 
@@ -325,3 +325,11 @@ movements
   .filter((mov) => mov > 0)
   .map((mov) => mov * eurToUsd) // both filter and map returns an array so we cah chain methods on it
   .reduce((acc, cur) => acc + cur); // but reduce method returns only a value so we cannot chain methods on it
+*/
+
+//////////The find method /////////
+
+// Note: we can use it to retrive one element of an array based on a certain condition
+
+
+
