@@ -78,7 +78,7 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
+
 
 const calcDisplayBalance = function (account) {
   let tot = account.reduce((acc, val) => acc + val);
@@ -94,30 +94,27 @@ const calcPrintBalance = function (movements) {
   labelBalance.textContent = `${balance}€`;
 };
 
-calcPrintBalance(account1.movements);
 
 
-
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter((mov) => mov > 0)
     .reduce((acc, cur) => acc + cur);
   labelSumIn.textContent = `${incomes}€`;
 
   const outcomes = Math.abs(
-    movements.filter((mov) => mov < 0).reduce((acc, cur) => acc + cur)
+    acc.movements.filter((mov) => mov < 0).reduce((acc, cur) => acc + cur)
   );
   labelSumOut.textContent = `${outcomes}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter((mov) => mov > 0)
-    .map((deposit, i, arr) =>  (deposit * 1.2) / 100)
-    .filter(map => map > 1)
-    .reduce((acc, cur, i, arr) =>acc + cur);
+    .map((deposit, i, arr) => (deposit * acc.interestRate) / 100)
+    .filter((map) => map > 1)
+    .reduce((acc, cur, i, arr) => acc + cur);
   labelSumInterest.textContent = `${interest}€`;
 };
 
-calcDisplaySummary(account1.movements);
 
 
 const createUsernames = function (accs) {
@@ -133,6 +130,34 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
+
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    (acc) => acc.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //we should use optional chaining
+    // Display UI and welcome message
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`
+    containerApp.style.opacity = 100;
+
+    // clear input fields
+    inputLoginUsername.value = inputLoginPin.value  = '';
+    inputLoginPin.blur(); // to avoid the focus on the input
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcPrintBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////~////////
@@ -328,8 +353,26 @@ movements
 */
 
 //////////The find method /////////
+/*
 
 // Note: we can use it to retrive one element of an array based on a certain condition
 
+// key differnce between Filter and find
+// 1st: filter returns all the elements that much the condition while find method returns the first element that matches the condition. 
+// 2nd: filter method returns a new array  while find method only returns only the element itself.
 
 
+console.log(movements.find(mov => mov < 0)
+);
+
+console.log(accounts);
+
+console.log(accounts.find(acc => acc.username === 'js'));
+
+  for (const account of accounts) {
+  if (account.username === 'js') {
+    console.log(account.owner);
+  }
+}
+
+*/
