@@ -180,6 +180,25 @@ btnTransfer.addEventListener('click', function (e) {
   inputTransferAmount.value = inputTransferTo.value = '';
 });
 
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)) {
+    
+    // Delete account
+    accounts.splice(index, 1); 
+    
+    // Hide UI
+    containerApp.style.opacity = 0;
+
+    const index = accounts.findIndex(acc => acc.username === inputCloseUsername.value);
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputClosePin.blur();
+  inputCloseUsername.blur();
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////~////////
 // LECTURES
