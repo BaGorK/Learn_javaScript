@@ -71,7 +71,7 @@ const displayMovements = function (movements) {
           <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov}€</div>
       </div>
     `;
     containerMovements.insertAdjacentHTML("afterbegin", html);
@@ -86,39 +86,60 @@ const calcDisplayBalance = function (account) {
 };
 calcDisplayBalance(account1.movements);
 
-
 const calcPrintBalance = function (movements) {
   const balance = movements.reduce(function (acc, cur) {
     return acc + cur;
   }, 0);
 
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
 };
+
 calcPrintBalance(account1.movements);
 
 
-const createUsernames = function (accs) { 
-  accs.forEach(function (acc) {
-   acc.username = acc.owner.toLowerCase()
-    .split(" ")
-    .map(function (words) {
-      return words[0];
-    })
-    .join("");
- })
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, cur) => acc + cur);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = Math.abs(
+    movements.filter((mov) => mov < 0).reduce((acc, cur) => acc + cur)
+  );
+  labelSumOut.textContent = `${outcomes}€`;
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposit, i, arr) =>  (deposit * 1.2) / 100)
+    .filter(map => map > 1)
+    .reduce((acc, cur, i, arr) =>acc + cur);
+  labelSumInterest.textContent = `${interest}€`;
 };
- 
+
+calcDisplaySummary(account1.movements);
+
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(" ")
+      .map(function (words) {
+        return words[0];
+      })
+      .join("");
+  });
+};
+
 createUsernames(accounts);
 
-
-
-
-
-
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
+/////////////////////////////////////////~////////
 // LECTURES
 ///////////////////////////////////////
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /*
 /////////////////////////////////////////////////
@@ -294,3 +315,13 @@ const max = movements.reduce((acc, mov) => {
 }, movements[0]);
 console.log(max);
 */
+
+// The magic of chaining methods
+
+const eurToUsd = 1.1;
+console.log(movements);
+
+movements
+  .filter((mov) => mov > 0)
+  .map((mov) => mov * eurToUsd) // both filter and map returns an array so we cah chain methods on it
+  .reduce((acc, cur) => acc + cur); // but reduce method returns only a value so we cannot chain methods on it
