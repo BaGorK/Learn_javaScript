@@ -78,23 +78,12 @@ const displayMovements = function (movements) {
   });
 };
 
-
-
-const calcDisplayBalance = function (account) {
-  let tot = account.reduce((acc, val) => acc + val);
-  labelBalance.textContent = tot;
-};
-calcDisplayBalance(account1.movements);
-
-const calcPrintBalance = function (movements) {
-  const balance = movements.reduce(function (acc, cur) {
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce(function (acc, cur) {
     return acc + cur;
   }, 0);
-
-  labelBalance.textContent = `${balance}€`;
+  labelBalance.textContent = `${acc.balance}€`;
 };
-
-
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
@@ -115,8 +104,6 @@ const calcDisplaySummary = function (acc) {
   labelSumInterest.textContent = `${interest}€`;
 };
 
-
-
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -131,6 +118,15 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 
+const updateUI = function (currentAccount) {
+  // Display movements
+  displayMovements(currentAccount.movements);
+  // Display balance
+  calcDisplayBalance(currentAccount);
+  // Display summary
+  calcDisplaySummary(currentAccount);
+}
+
 // Event handler
 let currentAccount;
 
@@ -144,19 +140,44 @@ btnLogin.addEventListener("click", function (e) {
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     //we should use optional chaining
     // Display UI and welcome message
-    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`
+    labelWelcome.textContent = `Welcome back ${
+      currentAccount.owner.split(" ")[0]
+    }`;
     containerApp.style.opacity = 100;
 
     // clear input fields
-    inputLoginUsername.value = inputLoginPin.value  = '';
+    inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur(); // to avoid the focus on the input
-    // Display movements
-    displayMovements(currentAccount.movements);
-    // Display balance
-    calcPrintBalance(currentAccount.movements);
-    // Display summary
-    calcDisplaySummary(currentAccount);
+
+
+    updateUI(currentAccount);
   }
+});
+
+// Transfer Money
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault(); // a button in a form by default reloads the page.
+
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    (acc) => acc.username === inputTransferTo.value
+  );
+  console.log(amount, receiverAcc);
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    amount <= currentAccount.balance &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    updateUI(currentAccount);
+  }
+
+  inputTransferAmount.value = inputTransferTo.value = '';
 });
 
 /////////////////////////////////////////////////
