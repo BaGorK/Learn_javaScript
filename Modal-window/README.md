@@ -12,7 +12,21 @@
 
      - Outside of the modal window 
 
-     - The Escape key on the keyboard
+     - The Escape key on the keyboar
+
+### What it looks like?
+
+<p align='center'>
+  <img src="images/img1.png" width='550' alt='image when you open it'
+</p>
+
+> when You click one of the buttons, it shows the modal window like this.
+
+<p align='center'>
+  <img src="images/img2.png" width='550' alt='image when you click a button'
+</p>
 
 
-> I think it good to know how to handle keyboard events in javascript 
+
+
+> I think it's good to know how to handle keyboard events in javascript 
