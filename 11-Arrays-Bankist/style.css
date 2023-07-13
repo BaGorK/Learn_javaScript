@@ -18,7 +18,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   color: #444;
-  background-color: #f3f3f3;
+  background-color: lightgray;
   height: 100vh;
   padding: 2rem;
 }
@@ -28,6 +28,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  margin: 40px;
 }
 
 .welcome {
@@ -62,9 +63,9 @@ nav {
   border: 1px solid #ccc;
 }
 
-.login__input::placeholder {
+/* .login__input::placeholder {
   color: #bbb;
-}
+} */
 
 .login__btn {
   border: none;
@@ -214,11 +215,11 @@ nav {
 }
 
 .operation--transfer {
-  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
 .operation--loan {
-  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
 }
 
 .operation--close {

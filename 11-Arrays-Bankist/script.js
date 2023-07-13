@@ -32,8 +32,15 @@ const account4 = {
   interestRate: 1,
   pin: 4444,
 };
+ 
+const account5 = {
+  owner: "Bagor Ka",
+  movements: [500, 2200, 700, 600, -900, 400, -130, -300, 5000],
+  interestRate: 1.5,
+  pin: 5555,
+};
 
-const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2, account3, account4, account5];
 
 // Elements
 const labelWelcome = document.querySelector(".welcome");
