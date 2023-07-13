@@ -460,3 +460,30 @@ console.log(
   `all movemnts are deposits : ${movements.every((mov) => mov > 0)}`
 ); // to check al the movements are deposits
 
+
+
+
+
+// flat and flatMap methods --- they introduced in ES2019
+console.log('--------The flat method---------');
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8, 9]; 
+// what if we want to change that array in to one flat array like this 
+// [1, 2, 3, 4, 5, 6, 7, 8, 9]
+console.log(arr.flat());
+
+
+// even deeply nested arrays 
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8, 9]; 
+console.log('-----deeply nested arrays----');
+console.log(arrDeep.flat(2)); 
+
+
+const totalDeposit = accounts
+  .map((acc) => acc.movements)
+  .flat()
+  .reduce((acc, cur) => acc + cur);
+const totalDeposit1 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, cur) => acc + cur);
+console.log(totalDeposit1);
+
