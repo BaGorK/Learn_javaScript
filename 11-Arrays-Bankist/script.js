@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
     const html = `
       <div class="movements__row">
@@ -217,6 +219,15 @@ btnClose.addEventListener('click', function (e) {
   inputClosePin.blur();
   inputCloseUsername.blur();
 })
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted
+})
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////~////////
 // LECTURES
@@ -435,7 +446,7 @@ console.log(accounts.find(acc => acc.username === 'js'));
 
 */
 
-
+/*
 // some and every array methods
 
 console.log(movements);
@@ -486,4 +497,22 @@ const totalDeposit1 = accounts
   .flatMap((acc) => acc.movements)
   .reduce((acc, cur) => acc + cur);
 console.log(totalDeposit1);
+
+*/
+
+// The sort method 
+
+const letter = ['a', 'd', 'g', 's', 'k', 'h'];
+console.log(letter.sort()); // it actually mutates the array
+console.log(letter);
+
+// Numbers // it actually does not work with numbers but with numbers
+console.log(movements); // [ 200, 450, -400, 3000, -650, -130, 70, 1300 ]
+// console.log(movements.sort()); // [ -130, -400, -650, 1300, 200, 3000, 450, 70 ]
+
+console.log(movements.sort((a, b) => a - b)); // in ascending order
+console.log(movements.sort((a, b) => b - a)); // in descending order
+  // let a and b be two consecutive numbers in the array
+  // return < 0, A, B // keeps the order
+  // return > 0, B, A // inverts the order
 
