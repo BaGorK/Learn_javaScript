@@ -181,6 +181,24 @@ btnTransfer.addEventListener('click', function (e) {
 });
 
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+  
+  if (amount > 0 && currentAccount.movements.some(mov => mov > amount * 0.1)) {
+    
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    // Upadate UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+})
+
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -416,3 +434,29 @@ console.log(accounts.find(acc => acc.username === 'js'));
 }
 
 */
+
+
+// some and every array methods
+
+console.log(movements);
+console.log(movements.includes(-130)); 
+
+//Note includes - testing for a equality
+//      some - testing for a condition
+
+
+// The some method : returns true if atleast one value satisfies the condition
+
+console.log(
+  movements.some(function (mov) {
+    return mov > 0; // is any value in the array that's > 0 ?
+  })
+);
+
+
+// The every method : returns true only if all elements satisfy the conditions
+
+console.log(
+  `all movemnts are deposits : ${movements.every((mov) => mov > 0)}`
+); // to check al the movements are deposits
+
