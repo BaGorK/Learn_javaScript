@@ -104,6 +104,13 @@ const formatMovementDate = function (dateNow, local) {
   }
 };
 
+const formatCur = function (value, local, currency) {
+  return new Intl.NumberFormat(local, {
+    style: 'currency',
+    currency
+  }).format(value)
+}
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = "";
 
@@ -117,10 +124,11 @@ const displayMovements = function (acc, sort = false) {
     const dateNow = new Date(acc.movementsDates[i]);
     const displayDates = formatMovementDate(dateNow, acc.local);
 
-    const formatedMov = new Intl.NumberFormat(acc.local, {
-      style: "currency",
-      currency: acc.currency,
-    }).format(mov);
+    // const formatedMov = new Intl.NumberFormat(acc.local, {
+    //   style: "currency",
+    //   currency: acc.currency,
+    // }).format(mov);
+    const formatedMov = formatCur(mov, acc.local, acc.currency)
 
     const html = `
       <div class="movements__row">
@@ -139,13 +147,15 @@ const displayMovements = function (acc, sort = false) {
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
 
-  const formatedBalance = new Intl.NumberFormat(acc.local, {
-    style: "currency",
-    currency: acc.currency,
-  }).format(acc.balance);
-
-  // labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
-  labelBalance.textContent = `${formatedBalance}`;
+  // const formatedBalance = new Intl.NumberFormat(acc.local, {
+  //   style: "currency",
+  //   currency: acc.currency,
+  // }).format(acc.balance);
+  const formatedBalance = formatCur(acc.balance, acc.local, acc.currency);
+    
+    
+    // labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
+    (labelBalance.textContent = `${formatedBalance}`);
 };
 
 const calcDisplaySummary = function (acc) {
@@ -153,19 +163,24 @@ const calcDisplaySummary = function (acc) {
     .filter((mov) => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
-  labelSumIn.textContent = `${new Intl.NumberFormat(acc.local, {
-    style: "currency",
-    currency: acc.currency,
-  }).format(incomes)}`;
+  // labelSumIn.textContent = `${new Intl.NumberFormat(acc.local, {
+  //   style: "currency",
+  //   currency: acc.currency,
+  // }).format(incomes)}`;
+
+  labelSumIn.textContent = formatCur(incomes, acc.local, acc.currency);
 
   const out = acc.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
-  labelSumOut.textContent = `${new Intl.NumberFormat(acc.local, {
-    style: "currency",
-    currency: acc.currency,
-  }).format(Math.abs(out))}`;
+  // labelSumOut.textContent = `${new Intl.NumberFormat(acc.local, {
+  //   style: "currency",
+  //   currency: acc.currency,
+  // }).format(Math.abs(out))}`;
+  labelSumOut.textContent = formatCur(out, acc.local, acc.currency)
+
+
 
   const interest = acc.movements
     .filter((mov) => mov > 0)
@@ -175,10 +190,13 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${new Intl.NumberFormat(acc.local, {
-    style: 'currency',
-    currency: acc.currency,
-  }).format(interest)}€`;
+  
+  // labelSumInterest.textContent = `${new Intl.NumberFormat(acc.local, {
+  //   style: 'currency',
+  //   currency: acc.currency,
+  // }).format(interest)}€`;
+
+  labelSumInterest.textContent = formatCur(interest, acc.local, acc.currency);
 };
 
 const createUsernames = function (accs) {
@@ -203,14 +221,42 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+
+const startLogoutTimer = function () {
+  // set time to 5 minutes
+  let time = 120;
+
+  const ticker = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    // in each call, print the remaining time to user
+    labelTimer.textContent = `${min}:${sec}`;
+    // when 0 seconds, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
+  ticker();
+  // call the timer every second
+  const timer = setInterval(ticker, 1000);
+  return timer;
+}
+
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount , timer;
 
 // FAKE ALWAY LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
+
+
+
 
 btnLogin.addEventListener("click", function (e) {
   // Prevent form from submitting
@@ -264,6 +310,9 @@ btnLogin.addEventListener("click", function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -290,6 +339,11 @@ btnTransfer.addEventListener("click", function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Reset the countdown timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
+
   }
 });
 
@@ -309,6 +363,10 @@ btnLoan.addEventListener("click", function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Reset the countdown timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
   inputLoanAmount.value = "";
 });
