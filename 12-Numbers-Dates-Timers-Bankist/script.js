@@ -48,8 +48,27 @@ const account2 = {
   currency: "USD",
   locale: "en-US",
 };
+const account3 = {
+  owner: "Bagor k",
+  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  interestRate: 1.8,
+  pin: 3333,
 
-const accounts = [account1, account2];
+  movementsDates: [
+    "2019-11-01T13:15:33.035Z",
+    "2012-11-30T09:48:16.867Z",
+    "2020-07-28T09:15:04.904Z",
+    "2023-07-14T10:17:24.185Z",
+    "2020-07-08T14:11:59.604Z",
+    "2023-07-10T17:01:17.194Z",
+    "2023-07-16T23:36:17.929Z",
+    "2023-06-17T12:01:20.894Z",
+  ],
+  currency: "USD",
+  locale: "en-US",
+};
+
+const accounts = [account1, account2, account3];
 
 /////////////////////////////////////////////////
 // Elements
