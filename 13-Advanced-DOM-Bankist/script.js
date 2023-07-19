@@ -1,12 +1,19 @@
 'use strict';
 
 ///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+
+
+const btnScroleTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+
+///////////////////////////////////////
+// Modal window
+
 
 const openModal = function (e) {
   e.preventDefault();
@@ -32,6 +39,65 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////////////////////////////
+
+// Implementing Smooth scroling
+
+
+btnScroleTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  // console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+
+  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    'Height/Width:',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  //
+  // A more modern way of implementing scrolling
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+
+///////////////////////////////////////////////////////////////
+// Page navigation
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   })
+// })
+// in Event deligation 
+// 1st, Add event listener to common parent element
+// 2nd, Determine what element originated the event
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(e.target);
+
+  // Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+        const id = e.target.getAttribute('href');
+        document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+})
+
 
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
@@ -139,52 +205,52 @@ document.addEventListener('keydown', function (e) {
 // console.log(logo);
 
 ///////////////////////////////////////////////////
-// Implementing Smooth scroling
+// // Implementing Smooth scroling
 
-const btnScroleTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+// const btnScroleTo = document.querySelector('.btn--scroll-to');
+// const section1 = document.querySelector('#section--1');
 
-btnScroleTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  // console.log(s1coords);
+// btnScroleTo.addEventListener('click', function (e) {
+//   const s1coords = section1.getBoundingClientRect();
+//   // console.log(s1coords);
 
-  console.log(e.target.getBoundingClientRect());
+//   console.log(e.target.getBoundingClientRect());
 
-  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+//   console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
 
-  console.log(
-    'Height/Width:',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
+//   console.log(
+//     'Height/Width:',
+//     document.documentElement.clientHeight,
+//     document.documentElement.clientWidth
+//   );
 
-  // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
+//   // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
 
-  // window.scrollTo({
-  //   left: s1coords.left + window.pageXOffset,
-  //   top: s1coords.top + window.pageYOffset,
-  //   behavior: 'smooth',
-  // });
+//   // window.scrollTo({
+//   //   left: s1coords.left + window.pageXOffset,
+//   //   top: s1coords.top + window.pageYOffset,
+//   //   behavior: 'smooth',
+//   // });
 
-  //
-  // A more modern way of implementing scrolling
-  section1.scrollIntoView({ behavior: 'smooth' });
-});
+//   //
+//   // A more modern way of implementing scrolling
+//   section1.scrollIntoView({ behavior: 'smooth' });
+// });
 
 ////////////////////////////////////////////////////
 // types of events and event handlers
 
-const h1 = document.querySelector('h1');
-console.log(h1);
+// const h1 = document.querySelector('h1');
+// console.log(h1);
 
-const alertH1 = function (e) {
-  console.log('great job!');
-};
-h1.addEventListener('mouseenter', alertH1);
-// we can remove eventListeners
-setTimeout(function () {
-  h1.removeEventListener('mouseenter', alertH1);
-}, 3000);
+// const alertH1 = function (e) {
+//   console.log('great job!');
+// };
+// h1.addEventListener('mouseenter', alertH1);
+// // we can remove eventListeners
+// setTimeout(function () {
+//   h1.removeEventListener('mouseenter', alertH1);
+// }, 3000);
 
 // //onEventListener
 // h1.onmouseenter = function (e) {
@@ -194,28 +260,28 @@ setTimeout(function () {
 ////////////////////////////////
 // Event Propagation in practice
 
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min) + 1 + min);
-const randomColor = (min, max) =>
-  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min) + 1 + min);
+// const randomColor = (min, max) =>
+//   `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
 
-document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('LINK', e.target, e.currentTarget);
-  console.log(e.currentTarget === this);
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, e.currentTarget);
+//   console.log(e.currentTarget === this);
 
-  // // Stop propagation
-  // e.stopPropagation();
-});
+//   // // Stop propagation
+//   // e.stopPropagation();
+// });
 
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('LINK', e.target, e.currentTarget);
-});
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, e.currentTarget);
+// });
 
-document.querySelector('.nav').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('LINK', e.target, e.currentTarget);
-});
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, e.currentTarget);
+// });
 
 
