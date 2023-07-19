@@ -138,9 +138,6 @@ document.addEventListener('keydown', function (e) {
 // logo.className = 'jonas'
 // console.log(logo);
 
-
-
-
 ///////////////////////////////////////////////////
 // Implementing Smooth scroling
 
@@ -169,8 +166,56 @@ btnScroleTo.addEventListener('click', function (e) {
   //   behavior: 'smooth',
   // });
 
-
-  ///////////////////////////////////////////////
-  // A more modern way of implementing scrolling 
-  section1.scrollIntoView({behavior:"smooth"})
+  //
+  // A more modern way of implementing scrolling
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+////////////////////////////////////////////////////
+// types of events and event handlers
+
+const h1 = document.querySelector('h1');
+console.log(h1);
+
+const alertH1 = function (e) {
+  console.log('great job!');
+};
+h1.addEventListener('mouseenter', alertH1);
+// we can remove eventListeners
+setTimeout(function () {
+  h1.removeEventListener('mouseenter', alertH1);
+}, 3000);
+
+// //onEventListener
+// h1.onmouseenter = function (e) {
+//   console.log('great job!');
+// };
+
+////////////////////////////////
+// Event Propagation in practice
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1 + min);
+const randomColor = (min, max) =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  console.log(e.currentTarget === this);
+
+  // // Stop propagation
+  // e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+});
+
+
