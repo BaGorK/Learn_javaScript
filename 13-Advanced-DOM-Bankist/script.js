@@ -41,12 +41,12 @@ document.addEventListener('keydown', function (e) {
 // console.log(document.head);
 // console.log(document.body);
 
-const header = document.querySelector('.header');
-const allSections = document.querySelectorAll('.section'); //
-// console.log(allSections); // returns a nodeList just like an array not exactly arrays
+// const header = document.querySelector('.header');
+// const allSections = document.querySelectorAll('.section'); //
+// // console.log(allSections); // returns a nodeList just like an array not exactly arrays
 
-document.getElementById('section--1');
-const allButtons = document.getElementsByTagName('button');
+// document.getElementById('section--1');
+// const allButtons = document.getElementsByTagName('button');
 // console.log(allButtons);
 // returns an HTMLCollection : also callrd life collection
 // i.e:  if the DOM changes this also authomatically updated
@@ -56,46 +56,43 @@ const allButtons = document.getElementsByTagName('button');
 // Creating and inserting Elements
 // .insertAdjacentHTML
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-// message.textContent = 'We use cookies for improved functionality and analytics.';
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class = "btn btn--close--cookie">Got it!</button>';
+// const message = document.createElement('div');
+// message.classList.add('cookie-message');
+// // message.textContent = 'We use cookies for improved functionality and analytics.';
+// message.innerHTML =
+//   'We use cookies for improved functionality and analytics. <button class = "btn btn--close--cookie">Got it!</button>';
 
 // header.prepend(message);  // makes message the first child
-header.append(message)  // makes element message the last child
+// header.append(message)  // makes element message the last child
 
 // one element cannot be displayed in two places at ones so we need to copy it.
 // header.append(message.cloneNode(true /*all the cild elemens will also be copied*/))
-
 
 // header.before(message); // inserts the element before the header as a sibiling element
 // header.after(message)
 
 ////////// Delete elements
-document.querySelector('.btn--close--cookie').addEventListener('click', function () {
-  message.remove();
-  // before this method we used ...
-  // DOM TRAVERSING
-  message.parentElement.removeChild(message);
-})
-
+// document.querySelector('.btn--close--cookie').addEventListener('click', function () {
+//   message.remove();
+//   // before this method we used ...
+//   // DOM TRAVERSING
+//   message.parentElement.removeChild(message);
+// })
 
 /////////////////////////////////////////////
 // Styles
 
 // inline styles
-message.style.backgroundColor = '#37383d'
-message.style.width = '120%'
+// message.style.backgroundColor = '#37383d'
+// message.style.width = '120%'
 
-// console.log(message.style.height); 
+// console.log(message.style.height);
 // console.log(message.style.width);
 
-// to get all the styles applied to an element 
+// to get all the styles applied to an element
 // console.log(getComputedStyle(message));
 // console.log(getComputedStyle(message).height); // returns the height as a string
-message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px'
-
+// message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px'
 
 // css custome properties or variables
 // we use the setproperty on the style
@@ -104,27 +101,25 @@ message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) +
 /////////////////////////////////////////////
 // Attributes
 
-const logo = document.querySelector('.nav__logo');
+// const logo = document.querySelector('.nav__logo');
 // console.log(logo);
 
 // console.log(logo.id);
 // console.log(logo.className);
 // console.log(logo.alt);
 
-logo.alt = 'Beautiful minimalist logo'
+// logo.alt = 'Beautiful minimalist logo'
 // console.log(logo);
-
 
 // Non-standard
 // console.log(logo.designer); // we get 'undefined'
 // console.log(logo.getAttribute('designer'));
 
-logo.setAttribute('company', 'Bankist');
+// logo.setAttribute('company', 'Bankist');
 // console.log(logo);
 
 // console.log(logo.src); // returns the absolute url
 // console.log(logo.getAttribute('src')); // returns the relative url
-
 
 // Data Attributes
 // console.log(logo.dataset.versionNumber);
@@ -140,5 +135,42 @@ logo.setAttribute('company', 'Bankist');
 // logo.classList.remove('className');
 
 // Don't use it because it overrides the available calss names
-// logo.className = 'jonas'  
+// logo.className = 'jonas'
 // console.log(logo);
+
+
+
+
+///////////////////////////////////////////////////
+// Implementing Smooth scroling
+
+const btnScroleTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScroleTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  // console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+
+  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    'Height/Width:',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+
+  ///////////////////////////////////////////////
+  // A more modern way of implementing scrolling 
+  section1.scrollIntoView({behavior:"smooth"})
+});
