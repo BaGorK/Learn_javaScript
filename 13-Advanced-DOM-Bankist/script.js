@@ -37,21 +37,21 @@ document.addEventListener('keydown', function (e) {
 ///////////////////////////////////////////////////////////////
 
 // Selecting elemtents
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
 
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section'); //
-console.log(allSections); // returns a nodeList just like an array not exactly arrays
+// console.log(allSections); // returns a nodeList just like an array not exactly arrays
 
 document.getElementById('section--1');
 const allButtons = document.getElementsByTagName('button');
-console.log(allButtons);
+// console.log(allButtons);
 // returns an HTMLCollection : also callrd life collection
 // i.e:  if the DOM changes this also authomatically updated
 
-console.log(document.getElementsByClassName('btn'));
+// console.log(document.getElementsByClassName('btn'));
 
 // Creating and inserting Elements
 // .insertAdjacentHTML
@@ -79,3 +79,66 @@ document.querySelector('.btn--close--cookie').addEventListener('click', function
   // DOM TRAVERSING
   message.parentElement.removeChild(message);
 })
+
+
+/////////////////////////////////////////////
+// Styles
+
+// inline styles
+message.style.backgroundColor = '#37383d'
+message.style.width = '120%'
+
+// console.log(message.style.height); 
+// console.log(message.style.width);
+
+// to get all the styles applied to an element 
+// console.log(getComputedStyle(message));
+// console.log(getComputedStyle(message).height); // returns the height as a string
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px'
+
+
+// css custome properties or variables
+// we use the setproperty on the style
+// document.documentElement.style.setProperty('--color-primary', 'orangered')
+
+/////////////////////////////////////////////
+// Attributes
+
+const logo = document.querySelector('.nav__logo');
+// console.log(logo);
+
+// console.log(logo.id);
+// console.log(logo.className);
+// console.log(logo.alt);
+
+logo.alt = 'Beautiful minimalist logo'
+// console.log(logo);
+
+
+// Non-standard
+// console.log(logo.designer); // we get 'undefined'
+// console.log(logo.getAttribute('designer'));
+
+logo.setAttribute('company', 'Bankist');
+// console.log(logo);
+
+// console.log(logo.src); // returns the absolute url
+// console.log(logo.getAttribute('src')); // returns the relative url
+
+
+// Data Attributes
+// console.log(logo.dataset.versionNumber);
+
+////////////////////////////////////
+// Classes
+
+// logo.classList.add('className');
+// logo.classList.add('className', 'classname2); // multiple class names
+// logo.classList.contains('className');
+// logo.classList.contains('className', 'classname2');
+// logo.classList.toggle('className');
+// logo.classList.remove('className');
+
+// Don't use it because it overrides the available calss names
+// logo.className = 'jonas'  
+// console.log(logo);
