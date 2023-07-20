@@ -6,14 +6,11 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
-
 const btnScroleTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
-
 ///////////////////////////////////////
 // Modal window
-
 
 const openModal = function (e) {
   e.preventDefault();
@@ -44,20 +41,19 @@ document.addEventListener('keydown', function (e) {
 
 // Implementing Smooth scroling
 
-
 btnScroleTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
+  // const s1coords = section1.getBoundingClientRect();
   // console.log(s1coords);
 
-  console.log(e.target.getBoundingClientRect());
+  // console.log(e.target.getBoundingClientRect());
 
-  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+  // console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
 
-  console.log(
-    'Height/Width:',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
+  // console.log(
+  //   'Height/Width:',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
 
   // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
 
@@ -72,9 +68,10 @@ btnScroleTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-
 ///////////////////////////////////////////////////////////////
+
 // Page navigation
+
 // document.querySelectorAll('.nav__link').forEach(function (el) {
 //   el.addEventListener('click', function (e) {
 //     e.preventDefault();
@@ -83,26 +80,26 @@ btnScroleTo.addEventListener('click', function (e) {
 //     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 //   })
 // })
-// in Event deligation 
+
+// in Event deligation
 // 1st, Add event listener to common parent element
 // 2nd, Determine what element originated the event
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
-  console.log(e.target);
+  // console.log(e.target);
 
   // Matching strategy
   if (e.target.classList.contains('nav__link')) {
-        const id = e.target.getAttribute('href');
-        document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
-})
-
+});
 
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-// Selecting elemtents
+// Selecting elements
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
@@ -114,7 +111,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // document.getElementById('section--1');
 // const allButtons = document.getElementsByTagName('button');
 // console.log(allButtons);
-// returns an HTMLCollection : also callrd life collection
+// returns an HTMLCollection : also called life collection
 // i.e:  if the DOM changes this also authomatically updated
 
 // console.log(document.getElementsByClassName('btn'));
@@ -132,7 +129,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // header.append(message)  // makes element message the last child
 
 // one element cannot be displayed in two places at ones so we need to copy it.
-// header.append(message.cloneNode(true /*all the cild elemens will also be copied*/))
+// header.append(message.cloneNode(true))/*all the cild elemens will also be copied*/
 
 // header.before(message); // inserts the element before the header as a sibiling element
 // header.after(message)
@@ -262,7 +259,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 // const randomInt = (min, max) =>
 //   Math.floor(Math.random() * (max - min) + 1 + min);
-// const randomColor = (min, max) =>
+// const randomColor = () =>
 //   `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
 
 // document.querySelector('.nav__link').addEventListener('click', function (e) {
@@ -284,4 +281,52 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   console.log('LINK', e.target, e.currentTarget);
 // });
 
+///////////////////////////////////////////////
+// DOM TRAVERSING
 
+// <h1>
+//   When
+//   <!-- Green highlight effect -->
+//   <span class="highlight">banking</span>
+//   meets<br />
+//   <span class="highlight">minimalist</span>
+// </h1>
+
+// const h1 = document.querySelector('h1');
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children); // returns HTMLCollection && applies for direct children elements
+
+// console.log(h1.firstElementChild); // <span class="highlight">banking</span>
+// console.log(h1.lastElementChild); // <span class="highlight">minimalist</span>
+
+// h1.firstElementChild.style.color = 'white';
+// h1.lastElementChild.style.color = 'orangered';
+
+// Going upwards: parents
+// console.log(h1.parentNode);  // similar to child node in oposite
+// console.log(h1.parentElement);
+// h1.parentNode.style.background = 'gray'
+// h1.parentElement.style.background = 'gray'
+
+
+// h1.closest('.classname') // it selects the parent nodes nomatter how far they are
+// h1.querySelector('.classname') // in reverse it selects the child nodes nomatter how they deep
+
+// h1.closest('.header').style.background = 'var(--gradient-primary)'
+// h1.closest('h1').style.background = 'var(--gradient-secondary)'
+
+// ///////// Going sideway: siblings
+
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// console.log(h1.parentElement.children);  // so we can see the siblings // HTMLCollection -- iterable
+
+// console.log([...h1.parentElement.children]);
+// [...h1.parentElement.children].forEach(function (el, i, arr) {
+//   if (el !== h1) {
+//     el.style.transform = 'scale(0.5)'
+//   }
+
+// })
