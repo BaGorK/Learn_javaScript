@@ -96,6 +96,31 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
+/////////////////////////////////////////////////
+//Building a tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove active classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Activate tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate Content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
@@ -309,7 +334,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // h1.parentNode.style.background = 'gray'
 // h1.parentElement.style.background = 'gray'
 
-
 // h1.closest('.classname') // it selects the parent nodes nomatter how far they are
 // h1.querySelector('.classname') // in reverse it selects the child nodes nomatter how they deep
 
@@ -330,3 +354,59 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   }
 
 // })
+
+
+/////////////////////////////////////////////////
+//Building a tabbed component
+// actually I take it as a challenge and I implemented this with the following 
+// not dirty but beautifull code
+
+
+/*
+const tab1 = document.querySelector('.operations__tab--1');
+const tab2 = document.querySelector('.operations__tab--2');
+const tab3 = document.querySelector('.operations__tab--3');
+const content1 = document.querySelector('.operations__content--1');
+const content2 = document.querySelector('.operations__content--2');
+const content3 = document.querySelector('.operations__content--3');
+
+
+tab1.addEventListener('click', function (e) {
+  [...tab1.parentElement.children].forEach(function (el, i) {
+    if (el.classList.contains('operations__tab--active')) {
+      el.classList.remove('operations__tab--active');
+      [...content1.parentElement.children][i + 1].classList.remove(
+        'operations__content--active'
+      );
+    }
+  });
+  tab1.classList.add('operations__tab--active');
+  content1.classList.add('operations__content--active');
+});
+
+tab2.addEventListener('click', function (e) {
+  [...tab2.parentElement.children].forEach(function (el, i) {
+    if (el.classList.contains('operations__tab--active')) {
+      el.classList.remove('operations__tab--active');
+      [...content1.parentElement.children][i + 1].classList.remove(
+        'operations__content--active'
+      );
+    }
+  });
+  tab2.classList.add('operations__tab--active');
+  content2.classList.add('operations__content--active');
+});
+
+tab3.addEventListener('click', function (e) {
+  [...tab3.parentElement.children].forEach(function (el, i) {
+    if (el.classList.contains('operations__tab--active')) {
+      el.classList.remove('operations__tab--active');
+      [...content1.parentElement.children][i + 1].classList.remove(
+        'operations__content--active'
+      );
+    }
+  });
+  tab3.classList.add('operations__tab--active');
+  content3.classList.add('operations__content--active');
+});
+*/
