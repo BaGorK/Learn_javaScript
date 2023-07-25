@@ -59,35 +59,35 @@ const renderCountryData = function (data, className = '') {
   countriesContainer.style.opacity = 1;
 };
 
-const getCountryData = function (country) {
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
-  request.send();
-  // console.log(request.responseText);
-  request.addEventListener('load', function () {
-    // console.log(this.responseText); // the result is a json file so we need to convert it to the actuall js object
-    const [data] = JSON.parse(this.responseText);
-    // console.log(data);
-    renderCountryData(data);
-    const neighbours = data.borders;
-    if (!neighbours) return;
-    neighbours.forEach(function (neighbour) {
-      const request2 = new XMLHttpRequest();
-      request2.open('GET', `https://restcountries.com/v3.1/alpha/${neighbour}`);
-      request2.send();
+// const getCountryData = function (country) {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+//   request.send();
+//   // console.log(request.responseText);
+//   request.addEventListener('load', function () {
+//     // console.log(this.responseText); // the result is a json file so we need to convert it to the actuall js object
+//     const [data] = JSON.parse(this.responseText);
+//     // console.log(data);
+//     renderCountryData(data);
+//     const neighbours = data.borders;
+//     if (!neighbours) return;
+//     neighbours.forEach(function (neighbour) {
+//       const request2 = new XMLHttpRequest();
+//       request2.open('GET', `https://restcountries.com/v3.1/alpha/${neighbour}`);
+//       request2.send();
 
-      request2.addEventListener('load', function () {
-        const [data2] = JSON.parse(this.responseText);
+//       request2.addEventListener('load', function () {
+//         const [data2] = JSON.parse(this.responseText);
 
-        renderCountryData(data2, 'neighbour');
-        // What if we want the neighbour country of a neighbour country(like 10 times inside =>  causes a callback Hell)
-      });
-    });
-  });
-};
+//         renderCountryData(data2, 'neighbour');
+//         // What if we want the neighbour country of a neighbour country(like 10 times inside =>  causes a callback Hell)
+//       });
+//     });
+//   });
+// };
 
 // getCountryData('israel');
-getCountryData('usa');
+// getCountryData('usa');
 // getCountryData('portugal');
 
 
@@ -121,4 +121,32 @@ getCountryData('usa');
 
 
 
-  
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+// Promises and the Fetch API
+// with promises we can get ride of callback hell 
+// but still we use callbacks
+
+// PROMISE LIFECYCLE
+// PENDING ------->>>------- SETTLED {----FULLFILLED------ AND ------REJECTED-------}
+
+// json is a method that is available on all response obejects that is comming from the fetch method
+// this json function actually also asynchronous function and returns a new promise
+
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v3.1/name/${country}`).then(function (response) {
+//     return response.json();
+//   }).then(function (data) {
+//     renderCountryData(data[0]);
+//   })
+// }
+// getCountryData('portugal');
+
+
+// the simplified version
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then(response => response.json())
+    .then(data => renderCountryData(data[0]));
+};
+getCountryData('portugal');
