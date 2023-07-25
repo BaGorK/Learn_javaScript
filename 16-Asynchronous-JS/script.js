@@ -90,7 +90,6 @@ const renderCountryData = function (data, className = '') {
 // getCountryData('usa');
 // getCountryData('portugal');
 
-
 // setTimeout(() => {
 //   console.log('1 second passed');
 //   setTimeout(() => {
@@ -115,16 +114,14 @@ const renderCountryData = function (data, className = '') {
 //     }, 1000);
 //   }, 1000);
 // }, 1000);
-      // // Triangular shape
-      // // callback hell makes our code hard to understand and maintain.
-      // // The code that is dificult to understand is basically called BAD CODE;
-
-
+// // Triangular shape
+// // callback hell makes our code hard to understand and maintain.
+// // The code that is dificult to understand is basically called BAD CODE;
 
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 // Promises and the Fetch API
-// with promises we can get ride of callback hell 
+// with promises we can get ride of callback hell
 // but still we use callbacks
 
 // PROMISE LIFECYCLE
@@ -142,11 +139,39 @@ const renderCountryData = function (data, className = '') {
 // }
 // getCountryData('portugal');
 
-
 // the simplified version
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then(response => response.json())
+//     .then(data => renderCountryData(data[0]));
+// };
+// getCountryData('portugal');
+
+
+
+
+///////////////////////////////
+// Chaining Promises
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
-    .then(data => renderCountryData(data[0]));
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      renderCountryData(data[0]);
+      const neighbour = data[0].borders[0];
+
+      if (!neighbour) return;
+
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+    })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      renderCountryData(data, 'neighbour');
+    });
 };
 getCountryData('portugal');
+
+
