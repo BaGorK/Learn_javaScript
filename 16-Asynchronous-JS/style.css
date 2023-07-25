@@ -12,24 +12,20 @@ html {
 body {
   font-family: system-ui;
   color: #555;
-  background-color: #f7f7f7;
+  background-color: lightgray;
   min-height: 100vh;
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-.container {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-}
-
 .countries {
   /* margin-bottom: 8rem; */
-  display: flex;
-
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  gap: 40px;
+  /* grid-template-rows: auto repeat(3, 15rem); */
   font-size: 2rem;
   opacity: 0;
   transition: opacity 1s;
@@ -49,6 +45,7 @@ body {
   content: 'Neighbour country';
   width: 100%;
   position: absolute;
+  display: flex;
   top: -4rem;
 
   text-align: center;
