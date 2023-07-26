@@ -285,31 +285,57 @@ TEST COORDINATES 2: -33.933, 18.474
 GOOD LUCK 😀
 */
 
-const whereAmI = function (lat, lng) {
-  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then(response => {
-      console.log(response);
-      if (!response.ok)
-        throw new Error(`problem with geocoding ${response.status}`);
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      console.log(`You are in ${data.city}, ${data.country}`);
+// const whereAmI = function (lat, lng) {
+//   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+//     .then(response => {
+//       console.log(response);
+//       if (!response.ok)
+//         throw new Error(`problem with geocoding ${response.status}`);
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city}, ${data.country}`);
 
-      const country = data.country;
-      return fetch(`https://restcountries.com/v3.1/name/${country}`);
-    })
-    .then(response => {
-      if (!response.ok) throw new Error(`Country not found ${response.status}`);
+//       const country = data.country;
+//       return fetch(`https://restcountries.com/v3.1/name/${country}`);
+//     })
+//     .then(response => {
+//       if (!response.ok) throw new Error(`Country not found ${response.status}`);
 
-      return response.json();
-    })
-    .then(data => renderCountryData(data))
-    .catch(err => {
-      console.error(`Something went wrong ${err.message}`);
-    });
-};
-whereAmI(52.508, 13.381);
+//       return response.json();
+//     })
+//     .then(data => renderCountryData(data))
+//     .catch(err => {
+//       console.error(`Something went wrong ${err.message}`);
+//     });
+// };
+// whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
+
+/////////////////////////////////////////////////////////////////
+/////////Asychronous Behind the Scenes_The Event Loop///////
+// 'A callback function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.'(MDN);
+// "callback hell" happens when you nest callbacks within callbacks many levels deep.
+// We can escape this callback hell using something call Promises in asynchronous JavaScript.
+/*
+// How to Consume Promises?
+// We can consume a promise using the then() method on the promise. 
+// Producing code is code that can take some time to complete. 
+// Consuming code is code that must wait for the result.
+// So if we consume a promise, this means that when we make a request, we wait for the result. Then after result arrives, we perform some operation on those results
+
+
+
+*/
+// in which order do they be excuted
+console.log('Start'); // excuted first
+setTimeout(() => {
+  console.log('0 sec timer');
+}, 0); // excuted last ---- its callback will be placed on the call stack first 
+Promise.resolve('resoleved promise 1').then(res => console.log(res)); // // excuted 3rd --- its call back will be placed on the microtasks queue
+// microtasks queue has priority over call back queue
+// so the event loop first checks the microtasks queue if it has any callback then it checks the callback queue to to send to the call stack and get excuted 
+console.log('end'); // excuted 2nd
+
