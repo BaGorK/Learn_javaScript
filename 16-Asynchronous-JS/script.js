@@ -330,12 +330,72 @@ GOOD LUCK 😀
 
 */
 // in which order do they be excuted
-console.log('Start'); // excuted first
-setTimeout(() => {
-  console.log('0 sec timer');
-}, 0); // excuted last ---- its callback will be placed on the call stack first 
-Promise.resolve('resoleved promise 1').then(res => console.log(res)); // // excuted 3rd --- its call back will be placed on the microtasks queue
-// microtasks queue has priority over call back queue
-// so the event loop first checks the microtasks queue if it has any callback then it checks the callback queue to to send to the call stack and get excuted 
-console.log('end'); // excuted 2nd
+// console.log('Start'); // excuted first
+// setTimeout(() => {
+//   console.log('0 sec timer');
+// }, 0); // excuted last ---- its callback will be placed on the call stack first
+// Promise.resolve('resoleved promise 1').then(res => console.log(res)); // // excuted 3rd --- its call back will be placed on the microtasks queue
+// console.log('end'); // excuted 2nd
+// // microtasks queue has priority over call back queue
+// so the event loop first checks the microtasks queue if it has any callback then it checks the callback queue to to send to the call stack and get excuted
 
+//////////////////////////////////////////////////////
+///////// Creating promises /////////////////////////
+
+const lottery = new Promise(function (resolve, reject) {
+  console.log('Lottery draw is happening ');
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You win!!');
+    } else {
+      reject(new Error('You lost Your money'));
+    }
+  }, 5000);
+});
+
+lottery
+  .then(response => {
+    console.log(response);
+  })
+  .catch(err => console.log(err));
+  
+
+  
+  //         setTimeout(() => {
+  //           console.log('5 second passed');
+  //           setTimeout(() => {
+  //             console.log('6 seconds passed');
+  //             setTimeout(() => {
+  //               console.log('7 second passed');
+  //               setTimeout(() => {
+  //                 console.log('8 seconds passed');
+  //               }, 1000);
+  //             }, 1000);
+  //           }, 1000);
+  //         }, 1000);
+
+
+
+  // Promisifying setTimeout
+  const wait = second =>
+  new Promise(function (resolve) {
+    setTimeout(resolve, second * 1000);
+  });
+wait(1)
+  .then(() => {
+    console.log('1 second passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 second passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 second passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('4 second passed');
+    return wait(1);
+  })
+  .then(() => console.log('5 second passed'));
