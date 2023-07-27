@@ -342,22 +342,22 @@ GOOD LUCK 😀
 //////////////////////////////////////////////////////
 ///////// Creating promises /////////////////////////
 
-const lottery = new Promise(function (resolve, reject) {
-  console.log('Lottery draw is happening ');
-  setTimeout(() => {
-    if (Math.random() >= 0.5) {
-      resolve('You win!!');
-    } else {
-      reject(new Error('You lost Your money'));
-    }
-  }, 5000);
-});
+// const lottery = new Promise(function (resolve, reject) {
+//   console.log('Lottery draw is happening ');
+//   setTimeout(() => {
+//     if (Math.random() >= 0.5) {
+//       resolve('You win!!');
+//     } else {
+//       reject(new Error('You lost Your money'));
+//     }
+//   }, 5000);
+// });
 
-lottery
-  .then(response => {
-    console.log(response);
-  })
-  .catch(err => console.log(err));
+// lottery
+//   .then(response => {
+//     console.log(response);
+//   })
+//   .catch(err => console.log(err));
   
 
   
@@ -376,26 +376,51 @@ lottery
 
 
 
-  // Promisifying setTimeout
-  const wait = second =>
-  new Promise(function (resolve) {
-    setTimeout(resolve, second * 1000);
-  });
-wait(1)
-  .then(() => {
-    console.log('1 second passed');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('2 second passed');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('3 second passed');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('4 second passed');
-    return wait(1);
-  })
-  .then(() => console.log('5 second passed'));
+//   // Promisifying setTimeout
+//   const wait = second =>
+//   new Promise(function (resolve) {
+//     setTimeout(resolve, second * 1000);
+//   });
+// wait(1)
+//   .then(() => {
+//     console.log('1 second passed');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('2 second passed');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('3 second passed');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('4 second passed');
+//     return wait(1);
+//   })
+//   .then(() => console.log('5 second passed'));
+
+
+
+//////////////////////////////////////////////
+// Async_Await
+const getPosition = function () {
+  return new Promise(function (resolve, reject)) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  }
+}
+const whereAmI = async function () {
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+  const responseGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = await responseGeo.json();
+
+  const response = await fetch(`https://restcountries.com/v3.1/name/${dataGeo.country}`);
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+  renderCountryData(data[0])
+}
+whereAmI()
+console.log('first');
+ 
