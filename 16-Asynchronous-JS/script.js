@@ -410,17 +410,23 @@ const getPosition = function () {
   }
 }
 const whereAmI = async function () {
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
-  const responseGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-  const dataGeo = await responseGeo.json();
-
-  const response = await fetch(`https://restcountries.com/v3.1/name/${dataGeo.country}`);
-  console.log(response);
-  const data = await response.json();
-  console.log(data);
-  renderCountryData(data[0])
+  try {    
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+    const responseGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if (!responseGeo.ok) throw new Error('Problem getting location data');
+    const dataGeo = await responseGeo.json();
+  
+    const response = await fetch(`https://restcountries.com/v3.1/name/${dataGeo.country}`);
+    if(!response.ok) throw new Error('Problem getting Country')
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
+    renderCountryData(data[0])
+  } catch (error) {
+    console.log(`${error}💥💥💥`);
+    renderError(`Something went Wrong ${err.message}`)
+  }
 }
 whereAmI()
 console.log('first');
- 
