@@ -423,10 +423,34 @@ const whereAmI = async function () {
     const data = await response.json();
     console.log(data);
     renderCountryData(data[0])
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`
   } catch (error) {
     console.log(`${error}💥💥💥`);
     renderError(`Something went Wrong ${err.message}`)
+
+    // Reject Promise returned from async funtion
+    throw err;
   }
 }
+// const city = whereAmI()
+// // an async function always returns a promise
+// console.log(city); 
 whereAmI()
-console.log('first');
+  .then(city => console.log(`2: ${city}`))
+  .catch(err => console.error(`2: ${err.message} 💥💥💥`))
+  .finally(() => console.log('3: Finished getting location'));
+// Even though there is an error in an async function, the promise that this async functions is still fullfilled and not rejected.
+
+
+// we can convert the above one to an Immediatly invoked function expression
+
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`2: ${city}`);
+  } catch (err) {
+    console.error(`2: ${err.message} 💥💥💥`);
+  }
+  console.log('3: Finished getting location');
+})(); // here we get the exact same result as the above;
+
