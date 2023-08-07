@@ -476,74 +476,116 @@ GOOD LUCK 😀
 ///////////////////////////////////////
 // Other Promise Combinators: race, allSettled and any
 // Promise.race
-(async function () {
-  const res = await Promise.race([
-    getJSON(`https://restcountries.eu/rest/v2/name/italy`),
-    getJSON(`https://restcountries.eu/rest/v2/name/egypt`),
-    getJSON(`https://restcountries.eu/rest/v2/name/mexico`),
-  ]);
-  console.log(res[0]);
-})();
+// (async function () {
+//   const res = await Promise.race([
+//     getJSON(`https://restcountries.eu/rest/v2/name/italy`),
+//     getJSON(`https://restcountries.eu/rest/v2/name/egypt`),
+//     getJSON(`https://restcountries.eu/rest/v2/name/mexico`),
+//   ]);
+//   console.log(res[0]);
+// })();
 
-const timeout = function (sec) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error('Request took too long!'));
-    }, sec * 1000);
-  });
-};
+// const timeout = function (sec) {
+//   return new Promise(function (_, reject) {
+//     setTimeout(function () {
+//       reject(new Error('Request took too long!'));
+//     }, sec * 1000);
+//   });
+// };
 
-Promise.race([
-  getJSON(`https://restcountries.eu/rest/v2/name/tanzania`),
-  timeout(5),
-])
-  .then(res => console.log(res[0]))
-  .catch(err => console.error(err));
-//////////////////////////////////////////////////////////
+// Promise.race([
+//   getJSON(`https://restcountries.eu/rest/v2/name/tanzania`),
+//   timeout(5),
+// ])
+//   .then(res => console.log(res[0]))
+//   .catch(err => console.error(err));
+// //////////////////////////////////////////////////////////
 
-// a utility for timing out a promise
-const timeoutPromise = function (delay) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      reject('TimeOut');
-    }, delay);
-  });
-};
+// // a utility for timing out a promise
+// const timeoutPromise = function (delay) {
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       reject('TimeOut');
+//     }, delay);
+//   });
+// };
 
-// Setup a timeout for 'foo()'
-Promise.race([foo(), timeoutPromise(3000)]).then(
-  function () {
-    // 'foo(..)' fulfilled in time!
-  },
-  function (err) {
-    // either `foo()` rejected, or it just
-    // didn't finish in time, so inspect
-    // `err` to know which
-  }
-);
+// // Setup a timeout for 'foo()'
+// Promise.race([foo(), timeoutPromise(3000)]).then(
+//   function () {
+//     // 'foo(..)' fulfilled in time!
+//   },
+//   function (err) {
+//     // either `foo()` rejected, or it just
+//     // didn't finish in time, so inspect
+//     // `err` to know which
+//   }
+// );
 
-////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////
 
-// Promise.allSettled
-Promise.allSettled([
-  Promise.resolve('Success'),
-  Promise.reject('ERROR'),
-  Promise.resolve('Another success'),
-]).then(res => console.log(res));
+// // Promise.allSettled
+// Promise.allSettled([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ]).then(res => console.log(res));
 
-Promise.all([
-  Promise.resolve('Success'),
-  Promise.reject('ERROR'),
-  Promise.resolve('Another success'),
-])
-  .then(res => console.log(res))
-  .catch(err => console.error(err));
+// Promise.all([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
 
-// Promise.any [ES2021]
-Promise.any([
-  Promise.resolve('Success'),
-  Promise.reject('ERROR'),
-  Promise.resolve('Another success'),
-])
-  .then(res => console.log(res))
-  .catch(err => console.error(err));
+// // Promise.any [ES2021]
+// Promise.any([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+////////////////////////////////////////////
+/*
+3 Ways to Promise
+There are 3 ways you could want promises to resolve, parallel (all together), sequential 
+(1 after another), or a race (doesn't matter who wins).
+*/
+
+const promisify = (item, delay) =>
+  new Promise(resolve => setTimeout(() => resolve(item), delay));
+
+const a = () => promisify('a', 1000);
+const b = () => promisify('b', 5000);
+const c = () => promisify('c', 3000)
+
+const parallel = async function () {
+  const promises = [a(), b(), c()];
+  const [output1, output2, output3] = await Promise.all(promises)
+  return `parallel is done: ${output1} ${output2} ${output3}`;
+}
+
+const sequence = async function () {
+  const output1 = await a();
+  const output2 = await b();
+  const output3 = await c();
+
+  return `sequence is done : ${output1} ${output2} ${output3}`;
+}
+
+const race = async function () {
+  const promises = [a(), b(), c()];
+  const output1 = await Promise.race(promises)
+  return `race is done: ${output1}`;
+}
+
+sequence().then(console.log);
+parallel().then(console.log);
+race().then(console.log);
+
+// race is done: a
+// parallel is done: a b c
+// sequence is done: a b c
