@@ -1,4 +1,5 @@
 'use strict';
+/*
 // the basic differece b/n a constructor func and a regular func is that we call a constructor func with the keyword `new`;
 // an arrow function does not work as a constructor function
 const Person = function (firstName, birthYear) {
@@ -6,7 +7,7 @@ const Person = function (firstName, birthYear) {
   this.birthYear = birthYear;
   console.log('---', this);
 
-  // it is a bad practice to create a method on a constructor function
+  // it is a bad practice to create a method directly on a constructor function. it wastes resource b/c when we create a new obj it will simply copied to that obj. so if we have hundreds of obj , it will be insuffient
   // this.calcAge = function () {
   //     console.log(2037 - this.birthYear);
   // }
@@ -18,7 +19,7 @@ const Bagor = new Person('Edmealem', 1993);
 // FOUR EVENTS THAT OCCURE
 // 1. first a new empty {} object is created
 // 2. the this keyword in the constructor func call is set to the new object.  this = {}
-// 3. {} the newly created object is then linked(__proto__property) to the constructor funcs prototype peroperty by adding {__proto__: Person.prototype}
+// 3. {} the newly created object is then linked(__proto__ property) to the constructor funcs prototype peroperty by adding {__proto__: Person.prototype}
 // 4. then the called function(Person) automatically return that object {}
 // in the middle we can take advantage of the this keyword. set values to that empty object.
 
@@ -38,7 +39,9 @@ Person.prototype.calcAge = function () {
 
 // NOTE: objects which are instances of the Person class will get access to all the methods of this Prototype property
 
-Bagor.calcAge(); // the this keyword is set to the object that is calling the method. this = Bagor
+Bagor.calcAge();
+// the this keyword is set to the object that is calling the method. this = Bagor
+// IN A REGULAR FUNCTION CALL THE `THIS` KEYWORD IS SET TO UNDEFINED
 
 // console.log(Bagor.__proto__);
 //- The prototype of the bagor object(instance) is essensialy the prototype property of the constructor function.
@@ -53,13 +56,13 @@ Person.prototype.species = 'Homo Sapiens';
 // console.log(Bagor.hasOwnProperty('firstName')); // true
 // console.log(Bagor.hasOwnProperty('species')); // true
 
-/*
+
  3 WAYS OF IMPLEMENTING PROTOTYPAL INHERITANCE IN JAVASCRIPT
 * Constructor functions  -- Techinque to create objects from a function.
 * ES6 Classes -- modern alternative to constru.funcs
 * Object.create();  --- the easiest and most straightforward way
 
-*/
+
 
 const Animal = function (name, age) {
   this.name = name;
@@ -98,3 +101,76 @@ const BMW = new Car('BMW', 130);
 console.log(BMW);
 BMW.brake();
 const Mercedes = new Car('Mercedes', 230);
+
+/////////////////////////////////////////
+// - ES6 CLASSES.
+
+const PersonClass = class {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2015 - this.birthYear);
+  }
+};
+
+const instance1 = new PersonClass('Edmealem', 1993);
+console.log(instance1);
+instance1.calcAge();
+
+
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+
+    this.movements = [];
+    this.local = navigator.language;
+  }
+}
+
+const acc1 = new Account('jonas', 'EUR', 1111);
+console.log(acc1);
+
+ */
+
+class PersonCl {
+  constructor(firstName, birthYear) {
+    // console.log(this);
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // Methods will be added to the prototype property of the PersonCl class.
+  calcAge() {
+    this.age = 2037 - this.birthYear;
+    // console.log(this.age);
+  }
+
+  greet() {
+    console.log(`Hey my name is ${this.firstName}.`);
+  }
+}
+
+const jessica = new PersonCl('Jessica', 2010);
+
+jessica.calcAge();
+// jessica is now an object.
+// const jessica = {
+//   firstName: 'Jessica',
+//   age: 27,
+//   birthYear: 2010,
+// };
+
+jessica.greet();
+console.dir(jessica);
+console.dir(jessica.__proto__);
+
+// we can also do
+// PersonCl.prototype.greet() {
+//   console.log(`Hey ${firstName}`);
+// }
