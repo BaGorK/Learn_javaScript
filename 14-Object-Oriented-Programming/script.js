@@ -1,5 +1,10 @@
 'use strict';
 /*
+//- 3 WAYS OF IMPLEMENTING PROTOTYPAL INHERITANCE IN JAVASCRIPT
+// * Constructor functions  -- Techinque to create objects from a function.
+// * ES6 Classes -- modern alternative to constru.funcs
+// * Object.create();  --- the easiest and most straightforward way
+
 // the basic differece b/n a constructor func and a regular func is that we call a constructor func with the keyword `new`;
 // an arrow function does not work as a constructor function
 const Person = function (firstName, birthYear) {
@@ -37,13 +42,13 @@ Person.prototype.calcAge = function () {
   // console.log(this);
 };
 
-// NOTE: objects which are instances of the Person class will get access to all the methods of this Prototype property
+//- NOTE: objects which are instances of the Person class will get access to all the methods of this Prototype property
 
 Bagor.calcAge();
-// the this keyword is set to the object that is calling the method. this = Bagor
-// IN A REGULAR FUNCTION CALL THE `THIS` KEYWORD IS SET TO UNDEFINED
+//- the this keyword is set to the object that is calling the method. this = Bagor
+//- IN A REGULAR FUNCTION CALL THE `THIS` KEYWORD IS SET TO UNDEFINED IN STRICT MODE AND TO THE GLOBAL OBJECT IN NON STRICT MODE.
 
-// console.log(Bagor.__proto__);
+// console.log(Bagor.__proto__); // LOGS THE PROTOTYPE OF BAGOR OBJ
 //- The prototype of the bagor object(instance) is essensialy the prototype property of the constructor function.
 // console.log(Bagor.__proto__ === Person.prototype); // true
 
@@ -54,15 +59,7 @@ Bagor.calcAge();
 Person.prototype.species = 'Homo Sapiens';
 // console.log(Bagor.species);
 // console.log(Bagor.hasOwnProperty('firstName')); // true
-// console.log(Bagor.hasOwnProperty('species')); // true
-
-
- 3 WAYS OF IMPLEMENTING PROTOTYPAL INHERITANCE IN JAVASCRIPT
-* Constructor functions  -- Techinque to create objects from a function.
-* ES6 Classes -- modern alternative to constru.funcs
-* Object.create();  --- the easiest and most straightforward way
-
-
+// console.log(Bagor.hasOwnProperty('species')); // false
 
 const Animal = function (name, age) {
   this.name = name;
@@ -76,7 +73,7 @@ Animal.prototype.setSound = function (str) {
   this.sound = str;
   console.log(this);
 };
-cat.setSound('miyawuu');
+cat.setSound('miyawuu...');
 
 console.log(Animal);
 
@@ -122,22 +119,6 @@ instance1.calcAge();
 
 
 
-class Account {
-  constructor(owner, currency, pin) {
-    this.owner = owner;
-    this.currency = currency;
-    this.pin = pin;
-
-    this.movements = [];
-    this.local = navigator.language;
-  }
-}
-
-const acc1 = new Account('jonas', 'EUR', 1111);
-console.log(acc1);
-
- */
-
 class PersonCl {
   constructor(firstName, birthYear) {
     // console.log(this);
@@ -171,6 +152,77 @@ console.dir(jessica);
 console.dir(jessica.__proto__);
 
 // we can also do
+// PersonCl.prototype.species = 'homo sapien';
+// console.log(jessica.hasOwnProperty('species')); //false
 // PersonCl.prototype.greet() {
 //   console.log(`Hey ${firstName}`);
 // }
+
+ */
+
+////////
+//- GETTERS AND SETTERS IN NORMAL OBJECTS
+const account = {
+  owner: 'Jonas',
+  movements: [500, 300, 1300, 750],
+  get latest() {
+    // console.log(this.movements.slice(-1)[0]);
+  },
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+account.latest; // WE DONOT NEED TO CALL `latest` METHOD.
+account.latest = 50;
+// console.log(account.movements);
+
+///-- HOWEVER CLASSES ALSO HAVE GETTERS AND SETTERS AND INDEED THEY WORK EXACTLY THE SAME.
+class Account {
+  constructor(owner, currency, pin) {
+    this._owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+
+    this.movements = [];
+    this.local = navigator.language;
+  }
+
+  get getOwner() {
+    return this._owner;
+  }
+}
+
+const acc = new Account('jonas', 'EUR', 1111);
+// console.log(acc);
+// console.log(acc.getOwner);
+
+////////////////////////////////////////////////////
+//  INHERITANCE BETWEEN 'CLASSES': CONSTRUCTOR FUNCTIONS
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2015 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  // this.firstName = firstName;
+  // this.birthYear = birthYear; // instead of doing this
+  // Person(firstName, birthYear) // here the problem is the this keyword is undefined
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+
+const mike = new Student('Mike', 1993, 'Computer science');
+// console.log(mike);
+mike.introduce();
