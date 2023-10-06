@@ -396,6 +396,63 @@ GOOD LUCK 😀
 //   })
 //   .then(() => console.log('5 second passed'));
 
+/////////////////////////////////////////////////
+////////CODING CHALLENGE 2
+
+const imgContainer = document.querySelector('.images');
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+
+    img.addEventListener('load', function () {
+      imgContainer.append(img);
+      resolve(img);
+    });
+
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+
+let currentImage;
+createImage('img/img-1.jpg')
+  .then(img => {
+    console.log('Image 1 is loaded');
+    currentImage = img;
+    return wait(3);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(img => {
+    console.log('Image 2 is loaded');
+    currentImage = img;
+    return wait(3);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+    return createImage('img/img-3.jpg');
+  })
+  .then(img => {
+    currentImage = img;
+    console.log('Image 3 is loading');
+    return wait(3);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+  })
+  .catch(err => console.log(err));
+
 // //////////////////////////////////////////////
 // // Async_Await
 // const getPosition = function () {
@@ -560,13 +617,13 @@ const promisify = (item, delay) =>
 
 const a = () => promisify('a', 1000);
 const b = () => promisify('b', 5000);
-const c = () => promisify('c', 3000)
+const c = () => promisify('c', 3000);
 
 const parallel = async function () {
   const promises = [a(), b(), c()];
-  const [output1, output2, output3] = await Promise.all(promises)
+  const [output1, output2, output3] = await Promise.all(promises);
   return `parallel is done: ${output1} ${output2} ${output3}`;
-}
+};
 
 const sequence = async function () {
   const output1 = await a();
@@ -574,17 +631,17 @@ const sequence = async function () {
   const output3 = await c();
 
   return `sequence is done : ${output1} ${output2} ${output3}`;
-}
+};
 
 const race = async function () {
   const promises = [a(), b(), c()];
-  const output1 = await Promise.race(promises)
+  const output1 = await Promise.race(promises);
   return `race is done: ${output1}`;
-}
+};
 
-sequence().then(console.log);
-parallel().then(console.log);
-race().then(console.log);
+// sequence().then(console.log);
+// parallel().then(console.log);
+// race().then(console.log);
 
 // race is done: a
 // parallel is done: a b c
