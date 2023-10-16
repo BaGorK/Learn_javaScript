@@ -11,7 +11,6 @@ const section1 = document.querySelector('#section--1');
 
 ///////////////////////////////////////
 // Modal window
-
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -24,13 +23,8 @@ const closeModal = function () {
 };
 
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
-// for (let i = 0; i < btnsOpenModal.length; i++)
-//   btnsOpenModal[i].addEventListener('click', openModal);
-
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
-
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
@@ -38,12 +32,11 @@ document.addEventListener('keydown', function (e) {
 });
 
 // Implementing Smooth scroling
+// A more modern way of implementing scrolling
 btnScroleTo.addEventListener('click', function (e) {
-  // A more modern way of implementing scrolling
   section1.scrollIntoView({ behavior: 'smooth' });
 });
-
-// Page navigation by using event deligation 
+// Page navigation by using event deligation
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
   // Matching strategy
@@ -54,10 +47,9 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 //Building a tabbed component
-const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
   // Guard clause -- ignore any clicks that happen not in the buttons (tabs)
@@ -76,53 +68,9 @@ tabsContainer.addEventListener('click', function (e) {
 ////////////////////////////////////////
 // Menu fade animation
 const nav = document.querySelector('.nav');
-// nav.addEventListener('mouseover', function (e) {
-//   if (e.target.classList.contains('nav__link')) {
-//     const link = e.target;
-//     const siblings = link.closest('nav').querySelectorAll('.nav__link');
-//     const logo = link.closest('nav').querySelector('img');
-//     siblings.forEach(el => {
-//       if (el !== link) el.style.opacity = 0.5;
-//     })
-//     logo.style.opacity = 0.5;
-//   }
-// })
-// nav.addEventListener('mouseout', function (e) {
-//     if (e.target.classList.contains('nav__link')) {
-//       const link = e.target;
-//       const siblings = link.closest('nav').querySelectorAll('.nav__link');
-//       const logo = link.closest('nav').querySelector('img');
-//       siblings.forEach(el => {
-//         if (el !== link) el.style.opacity = 1;
-//       });
-//       logo.style.opacity = 1;
-//     }
-// })
-
-// // the above code works fine but needs refactoring
-// const handleHover = function (e, opacity) {
-//   if (e.target.classList.contains('nav__link')) {
-//     const link = e.target;
-//     const siblings = link.closest('nav').querySelectorAll('.nav__link');
-//     const logo = link.closest('nav').querySelector('img');
-//     siblings.forEach(el => {
-//       if (el !== link) el.style.opacity = opacity;
-//     });
-//     logo.style.opacity = opacity;
-//   }
-// }
-// nav.addEventListener('mouseover', function(e) {
-//   handleHover(e, 0.5);
-// });
-
-// nav.addEventListener('mouseout', function (e) {
-//  handleHover(e, 1)
-// });
-
-// the above code also needs to be refactored
 const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
-    console.log(this);
+    // console.log(this); // this = 0.5 or 1
     const link = e.target;
     const siblings = link.closest('nav').querySelectorAll('.nav__link');
     const logo = link.closest('nav').querySelector('img');
@@ -133,8 +81,23 @@ const handleHover = function (e) {
   }
 };
 nav.addEventListener('mouseover', handleHover.bind(0.5));
-
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+//////////////////////////////////////////////////////
+//// Implementing a Sticky Navigation -- The Intersection Observer API
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height + 5;
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
 
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
@@ -350,7 +313,7 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 //     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 //   });
 // });
-//  with the above we already implemented smooth scrolling to each nav links but it is not efficient because 
+//  with the above we already implemented smooth scrolling to each nav links but it is not efficient because
 //  we are adding this event handler to each  one of this three elements and this is not ideal.
 
 // The better solution is to use Event deligation. in this we use the fact that events bubble up the dom tree
@@ -379,12 +342,11 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // h1.lastElementChild.style.color = 'orangered';
 
 // Going upwards: parents
-// console.log(h1.parentNode);  // similar to child node in oposite // it is a direct parent
 // console.log(h1.parentElement); // which may not be a direct parent //
 // h1.parentNode.style.background = 'gray'
 // h1.parentElement.style.background = 'gray'
 
-// h1.closest('.classname') // it selects the closest parent node nomatter how far they are
+// h1.closest('.classname') // it selects the closest parent node with that class, nomatter how far they are
 // h1.querySelector('.classname') // in reverse it selects the child nodes nomatter how they deep
 
 // h1.closest('.header').style.background = 'var(--gradient-primary)'
@@ -398,12 +360,11 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // trick-- so we can see the siblings // HTMLCollection -- iterable
 // console.log(h1.parentElement.children);  // we get all sibilings and h1 itself
 
-// console.log([...h1.parentElement.children]);
+// console.log([...h1.parentElement.children]); // it reterns an HTMLCollection
 // [...h1.parentElement.children].forEach(function (el, i, arr) {
 //   if (el !== h1) {
 //     el.style.transform = 'scale(0.5)'
 //   }
-
 // })
 
 /////////////////////////////////////////////////
@@ -411,14 +372,12 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // actually I take it as a challenge and I implemented this with the following
 // not dirty but beautifull code
 
-
 // const tab1 = document.querySelector('.operations__tab--1');
 // const tab2 = document.querySelector('.operations__tab--2');
 // const tab3 = document.querySelector('.operations__tab--3');
 // const content1 = document.querySelector('.operations__content--1');
 // const content2 = document.querySelector('.operations__content--2');
 // const content3 = document.querySelector('.operations__content--3');
-
 
 // tab1.addEventListener('click', function (e) {
 //   [...tab1.parentElement.children].forEach(function (el, i) {
@@ -459,3 +418,99 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 //   content3.classList.add('operations__content--active');
 // });
 
+////////////////////////////////////////
+//- Menu fade animation
+// //-- The difference between mouseenter nad mouseover is that mouseover events bubble up through the dom tree.
+// const nav = document.querySelector('.nav');
+// nav.addEventListener('mouseover', function (e) {
+//   if (e.target.classList.contains('nav__link')) {
+//     const link = e.target;
+//     const siblings = link.closest('nav').querySelectorAll('.nav__link');
+//     const logo = link.closest('nav').querySelector('img');
+//     siblings.forEach(el => {
+//       if (el !== link) el.style.opacity = 0.5;
+//     })
+//     logo.style.opacity = 0.5;
+//   }
+// })
+
+// this is basically to undo what we done in the mouse over
+// nav.addEventListener('mouseout', function (e) {
+//     if (e.target.classList.contains('nav__link')) {
+//       const link = e.target;
+//       const siblings = link.closest('nav').querySelectorAll('.nav__link');
+//       const logo = link.closest('nav').querySelector('img');
+//       siblings.forEach(el => {
+//         if (el !== link) el.style.opacity = 1;
+//       });
+//       logo.style.opacity = 1;
+//     }
+// })
+
+// // the above code works fine but needs refactoring. // usually refactoring works by creating a new function.
+// const handleHover = function (e, opacity) {
+//   if (e.target.classList.contains('nav__link')) {
+//     const link = e.target;
+//     const siblings = link.closest('nav').querySelectorAll('.nav__link');
+//     const logo = link.closest('nav').querySelector('img');
+//     siblings.forEach(el => {
+//       if (el !== link) el.style.opacity = opacity;
+//     });
+//     logo.style.opacity = opacity;
+//   }
+// }
+// nav.addEventListener('mouseover', function(e) {
+//   handleHover(e, 0.5);
+// });
+
+// nav.addEventListener('mouseout', function (e) {
+//  handleHover(e, 1)
+// });
+
+// the above code also needs to be refactored
+// const handleHover = function (e) {
+//   if (e.target.classList.contains('nav__link')) {
+//     console.log(this);
+//     const link = e.target;
+//     const siblings = link.closest('nav').querySelectorAll('.nav__link');
+//     const logo = link.closest('nav').querySelector('img');
+//     siblings.forEach(el => {
+//       if (el !== link) el.style.opacity = this;
+//     });
+//     logo.style.opacity = this;
+//   }
+// };
+// // basically we use the bind method to pass a value to a handler function.
+// nav.addEventListener('mouseover', handleHover.bind(0.5)); // we set the `this` variable to the value in the bind function
+// nav.addEventListener('mouseout', handleHover.bind(1));
+
+//////////////////////////////////////////////////////
+// Implementing a Sticky Navigation -- The Intersection Observer API
+// const header = document.querySelector('.header');
+// const navHeight = nav.getBoundingClientRect();
+// const stickyNav = function (entries) {
+//   const [entry] = entries;
+//   console.log(entry);
+//   if (!entry.isIntersecting) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// };
+// const Observer = new IntersectionObserver(stickyNav, {
+//   root: null,
+//   threshold: 0,
+//   rootMargin: `-${navHeight.height}px`,
+//   // rootMargin: '-90px', // if you have a responsive height, it is not a good idea to hard code 90px here
+// });
+// Observer.observe(header);
+
+// console.log(navHeight);
+/*
+  DOMRect {x: 30.000001907348633, y: 0, width: 1438.888916015625, height: 90.00000762939453, top: 0, …}
+  bottom:90.00000762939453
+  height:90.00000762939453
+  left:30.000001907348633
+  right: 1468.8889179229736
+  top:0
+  width:1438.888916015625
+  x:30.000001907348633
+  y:0
+*/
