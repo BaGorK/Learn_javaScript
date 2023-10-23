@@ -1,16 +1,11 @@
 'use strict';
-
 ///////////////////////////////////////
+// Modal window
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
-const btnScroleTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
-///////////////////////////////////////
-// Modal window
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -30,59 +25,55 @@ document.addEventListener('keydown', function (e) {
 });
 
 // Implementing Smooth scroling
-// A more modern way of implementing scrolling
-btnScroleTo.addEventListener('click', function (e) {
+const btnScroleTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+btnScroleTo.addEventListener('click', function () {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 // Page navigation by using event deligation
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
-  // Matching strategy
+
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
-
 //Building a tabbed component
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
-  // Guard clause -- ignore any clicks that happen not in the buttons (tabs)
   if (!clicked) return;
+
   // Remove active classes
   tabs.forEach(t => t.classList.remove('operations__tab--active'));
   tabsContent.forEach(c => c.classList.remove('operations__content--active'));
-  // Activate tab
+  // Activate tab and Content area
   clicked.classList.add('operations__tab--active');
-  // Activate Content area
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
-
 ////////////////////////////////////////
 // Menu fade animation
 const nav = document.querySelector('.nav');
 const handleHover = function (e) {
-  if (e.target.classList.contains('nav__link')) {
-    // console.log(this); // this = 0.5 or 1
-    const link = e.target;
-    const siblings = link.closest('nav').querySelectorAll('.nav__link');
-    const logo = link.closest('nav').querySelector('img');
-    siblings.forEach(el => {
-      if (el !== link) el.style.opacity = this;
-    });
-    logo.style.opacity = this;
-  }
+  if (!e.target.classList.contains('nav__link')) return;
+  
+  const link = e.target;
+  const siblings = link.closest('nav').querySelectorAll('.nav__link');
+  const logo = link.closest('nav').querySelector('img');
+  siblings.forEach(el => {
+    if (el !== link) el.style.opacity = this;
+  });
+  logo.style.opacity = this;
 };
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
-
 //////////////////////////////////////////////////////
-//// Implementing a Sticky Navigation -- The Intersection Observer API
+//// Implementing a Sticky Navigation
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height + 5;
 const stickyNav = function (entries) {
@@ -101,14 +92,14 @@ headerObserver.observe(header);
 const allSections = document.querySelectorAll('.section');
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-
   if (!entry.isIntersecting) return;
+
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
 };
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
-  threshold: 0.15,
+  threshold: 0.1,
 });
 allSections.forEach(section => {
   sectionObserver.observe(section);
@@ -232,12 +223,21 @@ slider();
 // Creating and inserting Elements
 // .insertAdjacentHTML
 
+const cookieHTML = `
+ <div class="cookie-message"> 
+  We use cookies for improved functionality and analytics. 
+  <button class = "btn btn--close--cookie">Got it!</button>
+ </div>
+`;
+header.insertAdjacentHTML('beforeend', cookieHTML);
+const message = document.querySelector('.cookie-message');
+
 // const message = document.createElement('div');
 // message.classList.add('cookie-message');
 // // message.textContent = 'We use cookies for improved functionality and analytics.';
 // message.innerHTML = 'We use cookies for improved functionality and analytics. <button class = "btn btn--close--cookie">Got it!</button>';
 
-// header.prepend(message);  // makes message the first child
+// // header.prepend(message);  // makes message the first child
 // header.append(message)  // makes element message the last child
 
 // one element cannot be displayed in two places at ones so we need to copy it.
@@ -247,18 +247,21 @@ slider();
 // header.after(message)
 
 ////////// Delete elements
-// document.querySelector('.btn--close--cookie').addEventListener('click', function () {
-//   message.remove();
-//   // before this method we used ...
-//   // DOM TRAVERSING
-//   message.parentElement.removeChild(message);
-// })
+document
+  .querySelector('.btn--close--cookie')
+  .addEventListener('click', function () {
+    message.remove();
+
+    // before this method we used ...
+    // DOM TRAVERSING
+    // message.parentElement.removeChild(message);
+  });
 
 /////////////////////////////////////////////
 // Styles
 
 // inline styles
-// message.style.backgroundColor = '#37383d'
+message.style.backgroundColor = '#37383d';
 // message.style.width = '120%'
 
 // console.log(message.style.height);
@@ -267,8 +270,9 @@ slider();
 // to get all the styles applied to an element
 // console.log(getComputedStyle(message));
 // console.log(getComputedStyle(message).height); // returns the height as a string // 43.366px
-// message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px' ==== 43.366 + 30  + 'px'
-
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 45 + 'px'; //==== 43.366 + 30  + 'px'
+message.style.position = 'fixed';
 // css custome properties or variables
 // we use the setproperty on the style
 // document.documentElement.style.setProperty('--color-primary', 'orangered')
@@ -306,7 +310,7 @@ slider();
 // logo.classList.add('className', 'classname2); // multiple class names
 // logo.classList.contains('className'); returns a boolean value
 // logo.classList.contains('className', 'classname2');
-// logo.classList.toggle('className');
+// logo.classList.toggle('className'); // it adds and removes the className
 // logo.classList.remove('className');
 
 // Don't use it because it overrides the available calss names
@@ -369,14 +373,15 @@ slider();
 /**
  * this type of onEvent Listener is a bit an old schoole. now we usually use addEventListener .
  * There are two ways that addEventListener is better .
- *    1- that it allows us to add multiple eventlistenrs to the same event.
+ *    1- that it allows us to add multiple eventlisteners to the same event.
  *    2- we can actually remove an eventlistener incase we don't need it.
- */
-
-/////////////////////////////////////
-/**
+ *
+ *
+ *
+ *
+ *
  * Event Propagation : BUBBLING AND CAPTURING
- *  The most important property of events which is bublbing.
+ * The most important property of events which is bublbing.
  *
  * let's now say: a click happens on the link. the DOM  then generates a click event. however this event is not actually generated at the target element
  * instead the event is generated at the root of the document so at the very top of the dom tree. and from there the so calld capturing phase is happening.
@@ -430,6 +435,13 @@ slider();
 // and by putting an event listener to common parent element
 // 2nd, Determine what element originated the event
 
+// nav.addEventListener('click', function (e) {
+//   e.preventDefault();
+//   if (!e.target.classList.contains('nav__link')) return;
+
+//   const id = e.target.getAttribute('href');
+//   document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+// })
 ///////////////////////////////////////////////
 // DOM TRAVERSING   // this will be another REFERENCE LECTURE
 
@@ -528,6 +540,24 @@ slider();
 //   content3.classList.add('operations__content--active');
 // });
 
+// // THE EFFICIENT WAY OF IMPLEMENTING TABED COMPONENT.
+// const tabsContainer2 = document.querySelector('.operations__tab-container');
+// const tabs2 = document.querySelectorAll('.operations__tab');
+// const contents = document.querySelectorAll('.operations__content');
+
+// tabsContainer2.addEventListener('click', function (e) {
+//   if (!e.target.classList.contains('operations__tab')) return;
+
+//   tabs.forEach(el => el.classList.remove('operations__tab--active'));
+//   contents.forEach(el => el.classList.remove('operations__content--active'));
+//   const tab = e.target.dataset.tab;
+
+//   e.target.classList.add('operations__tab--active');
+//   document
+//     .querySelector(`operations__content--${tab}`)
+//     .classList.add('operations__content--active');
+// });
+
 ////////////////////////////////////////
 //- Menu fade animation
 // //-- The difference between mouseenter nad mouseover is that mouseover events bubble up through the dom tree.
@@ -544,7 +574,7 @@ slider();
 //   }
 // })
 
-// this is basically to undo what we done in the mouse over
+// this is basically to undo what we done in the mouseover
 // nav.addEventListener('mouseout', function (e) {
 //     if (e.target.classList.contains('nav__link')) {
 //       const link = e.target;
@@ -569,10 +599,10 @@ slider();
 //     logo.style.opacity = opacity;
 //   }
 // }
+
 // nav.addEventListener('mouseover', function(e) {
 //   handleHover(e, 0.5);
 // });
-
 // nav.addEventListener('mouseout', function (e) {
 //  handleHover(e, 1)
 // });
@@ -580,7 +610,7 @@ slider();
 // the above code also needs to be refactored
 // const handleHover = function (e) {
 //   if (e.target.classList.contains('nav__link')) {
-//     console.log(this);
+//     console.log(this); // the value of this will be the value we bind to the function when we call it
 //     const link = e.target;
 //     const siblings = link.closest('nav').querySelectorAll('.nav__link');
 //     const logo = link.closest('nav').querySelector('img');
@@ -634,6 +664,39 @@ slider();
 // -300%, -200%, -100%, 0%
 // Then loop again
 // 0%, 100%, 200%, 300%
+
+/* 
+curSlide = 0,
+  i = 0 ,  trnas = 0% // current image 
+  i = 1, trnaslate = 100%
+  i = 2, trnaslate = 200%
+  i = 3, trnaslate = 300%
+// next btn 
+curSlide = 1
+i = 0, trnaslate = -100%
+i = 1, translate = 0% // current image 
+i = ...
+// next btn 
+curSlide = 2
+  i = 0, trnaslate = -200%
+  i = 1, translate = -100%
+  i = 2, translate = 0% // current image 
+  i = 3, translate = 100%
+// next btn 
+curSlide = 3
+  i = 0, trnaslate = -300%
+  i = 1, trnaslate = -200%
+  i = 2, translate = -100%
+  i = 3, translate = 0% // current image 
+// next btn 
+// we will slide to the first image, and we repeat the first step.
+curSlide = 0,
+  i = 0 ,  trnas = 0% // current image 
+  i = 1, trnaslate = 100%
+  i = 2, trnaslate = 200%
+  i = 3, trnaslate = 300%
+
+*/
 
 // const dotsContainer = document.querySelector('.dots');
 // const slides = document.querySelectorAll('.slide');
@@ -704,36 +767,3 @@ slider();
 //     activateDot(slide);
 //   }
 // });
-
-/* 
-curSlide = 0,
-  i = 0 ,  trnas = 0% // current image 
-  i = 1, trnaslate = 100%
-  i = 2, trnaslate = 200%
-  i = 3, trnaslate = 300%
-// next btn 
-curSlide = 1
-i = 0, trnaslate = -100%
-i = 1, translate = 0% // current image 
-i = ...
-// next btn 
-curSlide = 2
-  i = 0, trnaslate = -200%
-  i = 1, translate = -100%
-  i = 2, translate = 0% // current image 
-  i = 3, translate = 100%
-// next btn 
-curSlide = 3
-  i = 0, trnaslate = -300%
-  i = 1, trnaslate = -200%
-  i = 2, translate = -100%
-  i = 3, translate = 0% // current image 
-// next btn 
-// we will slide to the first image, and we repeat the first step.
-curSlide = 0,
-  i = 0 ,  trnas = 0% // current image 
-  i = 1, trnaslate = 100%
-  i = 2, trnaslate = 200%
-  i = 3, trnaslate = 300%
-
-*/
