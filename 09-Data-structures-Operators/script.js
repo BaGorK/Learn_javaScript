@@ -1,5 +1,22 @@
 'use strict';
 
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -7,13 +24,32 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  order: function () {
+  // ES6 enhanced object literals
+  openingHours,
+
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta(ing1, ing2, ing3) {
+    console.log(`Here is your declicious pasta with ${ing1}, ${ing2} and ${ing3}`);
+  },
+
+  orderPizza(mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
   },
 };
 
 ///////////////////////////////////////
 // Destructuring Arrays
+/*
 ///////////////////////////////////////
 const arr = [2, 3, 4];
 const a = arr[0];
@@ -50,3 +86,43 @@ console.log(i, j, k);
 // setting Default values when distructuring.
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r); // p = 8, q = 9, r = 1
+*/
+
+///////////////////////////////////////
+// Destructuring Objects
+/*
+///////////////////////////////////////
+// We can Destructure Objects that are passed to functions as a  parameter right away.
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'Via del Sole, 21',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+// In distructuring objects the order of the elements doesn't matter. 
+// but we need to use the names as is in the object.
+
+const { name, openingHours, categories } = restaurant;
+console.log(name, openingHours, categories);
+
+// giving another name
+const { name: restaurantName, openingHours: hours, categories: tags } = restaurant;
+console.log(restaurantName, hours, tags);
+
+// Default values
+const { menu = [], starterMenu: starters = [] } = restaurant;
+console.log(menu, starters);
+
+// // Mutating variables
+// let a = 111;
+// let b = 999;
+// const obj = { a: 23, b: 7, c: 14 };
+// ({ a, b } = obj);
+// console.log(a, b);
+
+// Nested objects
+// prettier-ignore
+const {  startDate: { date1, date2 },} = { startDate: { date1: 'date 1', date2: 'date 2' } };
+
+*/
