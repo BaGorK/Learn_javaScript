@@ -49,8 +49,8 @@ const restaurant = {
 
 ///////////////////////////////////////
 // Destructuring Arrays
-/*
 ///////////////////////////////////////
+/*
 const arr = [2, 3, 4];
 const a = arr[0];
 const b = arr[1];
@@ -90,8 +90,8 @@ console.log(p, q, r); // p = 8, q = 9, r = 1
 
 ///////////////////////////////////////
 // Destructuring Objects
-/*
 ///////////////////////////////////////
+/*
 // We can Destructure Objects that are passed to functions as a  parameter right away.
 restaurant.orderDelivery({
   time: '22:30',
@@ -126,3 +126,56 @@ console.log(menu, starters);
 const {  startDate: { date1, date2 },} = { startDate: { date1: 'date 1', date2: 'date 2' } };
 
 */
+
+///////////////////////////////////////
+// The Spread Operator (...)
+///////////////////////////////////////
+/*
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+
+console.log(...newArr);
+console.log(1, 2, 7, 8, 9);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log(newMenu);
+
+// Copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Join 2 arrays
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);
+
+// Iterables: arrays, strings, maps, sets. NOT objects
+const str = 'Jonas';
+const letters = [...str, ' ', 'S.'];
+console.log(letters);
+console.log(...str);
+// console.log(`${...str} Schmedtmann`);
+
+// Real-world example
+const ingredients = [
+    // prompt("Let's make pasta! Ingredient 1?"),
+    // prompt('Ingredient 2?'),
+    // prompt('Ingredient 3'),
+];
+console.log(ingredients);
+
+restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
+restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+console.log(newRestaurant);
+
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+console.log(restaurantCopy.name);
+console.log(restaurant.name);
+*/
+
