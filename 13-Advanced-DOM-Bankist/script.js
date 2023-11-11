@@ -15,7 +15,7 @@ const closeModal = function () {
   modal.classList.add('hidden');
   overlay.classList.add('hidden');
 };
-btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
+btnsOpenModal.forEach((btn) => btn.addEventListener('click', openModal));
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 document.addEventListener('keydown', function (e) {
@@ -48,24 +48,22 @@ tabsContainer.addEventListener('click', function (e) {
   if (!clicked) return;
 
   // Remove active classes
-  tabs.forEach(t => t.classList.remove('operations__tab--active'));
-  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+  tabs.forEach((t) => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach((c) => c.classList.remove('operations__content--active'));
   // Activate tab and Content area
   clicked.classList.add('operations__tab--active');
-  document
-    .querySelector(`.operations__content--${clicked.dataset.tab}`)
-    .classList.add('operations__content--active');
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
 });
 ////////////////////////////////////////
 // Menu fade animation
 const nav = document.querySelector('.nav');
 const handleHover = function (e) {
   if (!e.target.classList.contains('nav__link')) return;
-  
+
   const link = e.target;
   const siblings = link.closest('nav').querySelectorAll('.nav__link');
   const logo = link.closest('nav').querySelector('img');
-  siblings.forEach(el => {
+  siblings.forEach((el) => {
     if (el !== link) el.style.opacity = this;
   });
   logo.style.opacity = this;
@@ -101,7 +99,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
   threshold: 0.1,
 });
-allSections.forEach(section => {
+allSections.forEach((section) => {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
@@ -126,7 +124,7 @@ const imgObserver = new IntersectionObserver(loadImg, {
   threshold: 0,
   rootMargin: '200px',
 });
-imgTargets.forEach(img => imgObserver.observe(img));
+imgTargets.forEach((img) => imgObserver.observe(img));
 
 ///////////////////////////
 // SLIDER
@@ -143,23 +141,18 @@ const slider = function () {
   // Functions
   const createDots = function () {
     slides.forEach((_, i) => {
-      dotsContainer.insertAdjacentHTML(
-        'beforeend',
-        `<button class="dots__dot" data-slide="${i}"></button>`
-      );
+      dotsContainer.insertAdjacentHTML('beforeend', `<button class="dots__dot" data-slide="${i}"></button>`);
     });
   };
   const activateDot = function (slide) {
-    document.querySelectorAll('.dots__dot').forEach(dot => {
+    document.querySelectorAll('.dots__dot').forEach((dot) => {
       dot.classList.remove('dots__dot--active');
     });
     const curdot = document.querySelector(`.dots__dot[data-slide='${slide}']`);
     curdot.classList.add('dots__dot--active');
   };
   const goToSlide = function (slide) {
-    slides.forEach(
-      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
-    );
+    slides.forEach((s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`));
   };
   const nextSlide = function () {
     if (curSlide === maxSlide) curSlide = 0;
@@ -247,15 +240,13 @@ const message = document.querySelector('.cookie-message');
 // header.after(message)
 
 ////////// Delete elements
-document
-  .querySelector('.btn--close--cookie')
-  .addEventListener('click', function () {
-    message.remove();
+document.querySelector('.btn--close--cookie').addEventListener('click', function () {
+  message.remove();
 
-    // before this method we used ...
-    // DOM TRAVERSING
-    // message.parentElement.removeChild(message);
-  });
+  // before this method we used ...
+  // DOM TRAVERSING
+  // message.parentElement.removeChild(message);
+});
 
 /////////////////////////////////////////////
 // Styles
@@ -270,8 +261,7 @@ message.style.backgroundColor = '#37383d';
 // to get all the styles applied to an element
 // console.log(getComputedStyle(message));
 // console.log(getComputedStyle(message).height); // returns the height as a string // 43.366px
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 45 + 'px'; //==== 43.366 + 30  + 'px'
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 45 + 'px'; //==== 43.366 + 30  + 'px'
 message.style.position = 'fixed';
 // css custome properties or variables
 // we use the setproperty on the style
