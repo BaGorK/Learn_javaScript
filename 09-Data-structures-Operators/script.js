@@ -256,3 +256,18 @@ if (restaurant.orderPizza) {
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 */
 
+
+///////////////////////////////////////
+// The Nullish Coalescing Operator 
+///////////////////////////////////////
+/*
+// -- works on the idea of nullish values instead of falsy values.
+// Nullish: null and undefined (NOT 0 or '')
+
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10;
+console.log(guests);
+
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
+*/
