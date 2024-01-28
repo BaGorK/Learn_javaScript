@@ -466,26 +466,26 @@ console.log(Number.isFinite(23 / 0));
 console.log(Number.isInteger(23));
 console.log(Number.isInteger(23.0));
 console.log(Number.isInteger(23 / 0));
-
-
+*/
+/*
 ///////////////////////////////////////
 // Math and Rounding
 console.log(Math.sqrt(25));
 console.log(25 ** (1 / 2));
 console.log(8 ** (1 / 3));
 
-console.log(Math.max(5, 18, 23, 11, 2));
-console.log(Math.max(5, 18, '23', 11, 2));
-console.log(Math.max(5, 18, '23px', 11, 2));
+console.log(Math.max(5, 18, 23, 11, 2)); // 23
+console.log(Math.max(5, 18, '23', 11, 2)); // 23
+console.log(Math.max(5, 18, '23px', 11, 2)); // NaN
 
 console.log(Math.min(5, 18, 23, 11, 2));
 
 console.log(Math.PI * Number.parseFloat('10px') ** 2);
-
-console.log(Math.trunc(Math.random() * 6) + 1);
+// Math.trunc removes any value after decimal point
+console.log(Math.trunc(Math.random() * 6) + 1); 
 
 const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min) + 1) + min;
+Math.floor(Math.random() * (max - min) + 1) + min;
 // 0...1 -> 0...(max - min) -> min...max
 // console.log(randomInt(10, 20));
 
@@ -493,23 +493,22 @@ const randomInt = (min, max) =>
 console.log(Math.round(23.3));
 console.log(Math.round(23.9));
 
-console.log(Math.ceil(23.3));
-console.log(Math.ceil(23.9));
+console.log(Math.ceil(23.3)); // 24
+console.log(Math.ceil(23.9)); // 24
 
-console.log(Math.floor(23.3));
-console.log(Math.floor('23.9')); // it actually does type coersion
+console.log(Math.floor(23.3)); // 23
+console.log(Math.floor('23.9')); // 23 - it actually does type coersion
 
-console.log(Math.trunc(23.3));
-
-console.log(Math.trunc(-23.3));
-console.log(Math.floor(-23.3));
+console.log(Math.trunc(-23.3)); // -23 - the difference b/n trunc and floor
+console.log(Math.floor(-23.3)); // -24
 
 // Rounding to decimals
-console.log((2.7).toFixed(0));  // it always returns a string no a number
-console.log((2.7).toFixed(3));
-console.log((2.345).toFixed(2));
+console.log((2.7).toFixed(0)); // '3'  // it always returns a string not a number
+console.log((2.7).toFixed(3)); // '2.700'
+console.log((2.345).toFixed(2)); // '2.35'
 console.log(+(2.345).toFixed(2));
 */
+
 
 ///////////////////////////////////////
 // The Remainder Operator

@@ -21,7 +21,7 @@ const Person = function (firstName, birthYear) {
 const Bagor = new Person('Edmealem', 1993);
 // console.log(Bagor);
 
-// FOUR EVENTS THAT OCCURE
+// FOUR EVENTS THAT OCCURE WHEN WE USE THE `THIS` KEYWORD
 // 1. first a new empty {} object is created
 // 2. the this keyword in the constructor func call is set to the new object.  this = {}
 // 3. {} the newly created object is then linked(__proto__ property) to the constructor funcs prototype peroperty by adding {__proto__: Person.prototype}
@@ -157,6 +157,12 @@ console.dir(jessica.__proto__);
 // PersonCl.prototype.greet() {
 //   console.log(`Hey ${firstName}`);
 // }
+
+// IMPORTANT THINGS TO KEEP IN MIND
+1ST) classes are not hoisted
+2ND) just like functions classes are first-class citizens. 
+i.e we can pass classes to function and also return them from functions.
+3RD) the body of a class is always excuted in strict mode.
 
  */
 

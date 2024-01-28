@@ -179,7 +179,6 @@ console.log(restaurantCopy.name);
 console.log(restaurant.name);
 */
 
-
 ///////////////////////////////////////
 // Rest Pattern and Parameters
 ///////////////////////////////////////
@@ -221,7 +220,6 @@ restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
 restaurant.orderPizza('mushrooms');
 */
 
-
 ///////////////////////////////////////
 // Short Circuiting (&& and ||)
 ///////////////////////////////////////
@@ -256,7 +254,6 @@ if (restaurant.orderPizza) {
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 */
 
-
 ///////////////////////////////////////
 // The Nullish Coalescing Operator
 ///////////////////////////////////////
@@ -271,8 +268,6 @@ console.log(guests);
 const guestCorrect = restaurant.numGuests ?? 10;
 console.log(guestCorrect);
 */
-
-
 
 ///////////////////////////////////////
 // Logical Assignment Operators // ES2021
@@ -326,8 +321,6 @@ for (const [i, el] of menu.entries()) {
 // console.log([...menu.entries()]);
 */
 
-
-
 ///////////////////////////////////////
 // Optional Chaining
 ///////////////////////////////////////
@@ -363,7 +356,6 @@ if (users.length > 0) console.log(users[0].name);
 else console.log('user array empty');
 */
 
-
 ///////////////////////////////////////
 // Looping Objects: Object Keys, Values, and Entries
 ///////////////////////////////////////
@@ -392,7 +384,6 @@ for (const [day, { open, close }] of entries) {
   console.log(`On ${day} we open at ${open} and close at ${close}`);
 }
 */
-
 
 ///////////////////////////////////////
 // Sets
@@ -432,7 +423,6 @@ console.log(
 
 console.log(new Set('jonasschmedtmann').size);
 */
-
 
 ///////////////////////////////////////
 // Maps: Fundamentals
@@ -554,7 +544,6 @@ console.log(typeof new String('jonas'));
 console.log(typeof new String('jonas').slice(1));
 */
 
-
 ///////////////////////////////////////
 // Working With Strings - Part 2
 ///////////////////////////////////////
@@ -617,7 +606,7 @@ planesInLine(12);
 ///////////////////////////////////////
 
 const flights =
-  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // 🔴 Delayed Departure from FAO to TXL (11h25)
 //              Arrival from BRU to FAO (11h45)
@@ -626,13 +615,12 @@ const flights =
 
 const getCode = (str) => str.slice(0, 3).toUpperCase();
 
-for (const flight of flights.split("+")) {
-  const [type, from, to, time] = flight.split(";");
+for (const flight of flights.split('+')) {
+  const [type, from, to, time] = flight.split(';');
   // prettier-ignore
   const output = `${type.startsWith("_Delayed") ? "🔴" : ""}${type.replaceAll("_"," ")} ${getCode(from)} ${getCode(to)} (${time.replace(":", "h")})`.padStart(36);
   console.log(output);
 }
-
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -660,39 +648,27 @@ GOOD LUCK 😀
 */
 
 const game = {
-  team1: "Bayern Munich",
-  team2: "Borrussia Dortmund",
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
   players: [
     [
-      "Neuer",
-      "Pavard",
-      "Martinez",
-      "Alaba",
-      "Davies",
-      "Kimmich",
-      "Goretzka",
-      "Coman",
-      "Muller",
-      "Gnarby",
-      "Lewandowski",
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
     ],
-    [
-      "Burki",
-      "Schulz",
-      "Hummels",
-      "Akanji",
-      "Hakimi",
-      "Weigl",
-      "Witsel",
-      "Hazard",
-      "Brandt",
-      "Sancho",
-      "Gotze",
-    ],
+    ['Burki', 'Schulz', 'Hummels', 'Akanji', 'Hakimi', 'Weigl', 'Witsel', 'Hazard', 'Brandt', 'Sancho', 'Gotze'],
   ],
-  score: "4:0",
-  scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
-  date: "Nov 9th, 2037",
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
   odds: {
     team1: 1.33,
     x: 3.25,
@@ -746,17 +722,17 @@ GOOD LUCK 😀
 */
 
 const gameEvents = new Map([
-  [17, "⚽️ GOAL"],
-  [36, "🔁 Substitution"],
-  [47, "⚽️ GOAL"],
-  [61, "🔁 Substitution"],
-  [64, "🔶 Yellow card"],
-  [69, "🔴 Red card"],
-  [70, "🔁 Substitution"],
-  [72, "🔁 Substitution"],
-  [76, "⚽️ GOAL"],
-  [80, "⚽️ GOAL"],
-  [92, "🔶 Yellow card"],
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
 ]);
 
 /*
@@ -783,7 +759,6 @@ for (const [min, event] of gameEvents) {
   console.log(`[${half} HALF] ${min}: ${event}`);
 }
 */
-
 
 ///////////////////////////////////////
 // Coding Challenge #4
@@ -836,4 +811,3 @@ document.querySelector('button').addEventListener('click', function () {
   }
 });
 */
-
