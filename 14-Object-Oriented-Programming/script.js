@@ -1,18 +1,19 @@
 'use strict';
 /*
 //- 3 WAYS OF IMPLEMENTING PROTOTYPAL INHERITANCE IN JAVASCRIPT
-// * Constructor functions  -- Techinque to create objects from a function.
-// * ES6 Classes -- modern alternative to constru.funcs
+// * Constructor functions  -- Technique to create objects from a function.
+// * ES6 Classes -- modern alternative to constructor funcs
 // * Object.create();  --- the easiest and most straightforward way
 
-// the basic differece b/n a constructor func and a regular func is that we call a constructor func with the keyword `new`;
+// the basic difference b/n a constructor func and a regular func is that we call a constructor func with the keyword `new`;
 // an arrow function does not work as a constructor function
 const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
   console.log('---', this);
 
-  // it is a bad practice to create a method directly on a constructor function. it wastes resource b/c when we create a new obj it will simply copied to that obj. so if we have hundreds of obj , it will be insuffient
+  // it is a bad practice to create a method directly on a constructor function. it wastes resource b/c when we create a new obj ...
+  // ... it will simply copied to that obj. so if we have hundreds of obj , it will be insufficient
   // this.calcAge = function () {
   //     console.log(2037 - this.birthYear);
   // }
@@ -21,10 +22,11 @@ const Person = function (firstName, birthYear) {
 const Bagor = new Person('Edmealem', 1993);
 // console.log(Bagor);
 
-// FOUR EVENTS THAT OCCURE WHEN WE USE THE `THIS` KEYWORD
+// FOUR EVENTS THAT OCCUR WHEN WE USE THE `new` KEYWORD
 // 1. first a new empty {} object is created
 // 2. the this keyword in the constructor func call is set to the new object.  this = {}
-// 3. {} the newly created object is then linked(__proto__ property) to the constructor funcs prototype peroperty by adding {__proto__: Person.prototype}
+// 3. {} the newly created object is then linked(__proto__ property) to the constructor funcs prototype...
+//    ...property by adding {__proto__: Person.prototype}
 // 4. then the called function(Person) automatically return that object {}
 // in the middle we can take advantage of the this keyword. set values to that empty object.
 
@@ -49,7 +51,7 @@ Bagor.calcAge();
 //- IN A REGULAR FUNCTION CALL THE `THIS` KEYWORD IS SET TO UNDEFINED IN STRICT MODE AND TO THE GLOBAL OBJECT IN NON STRICT MODE.
 
 // console.log(Bagor.__proto__); // LOGS THE PROTOTYPE OF BAGOR OBJ
-//- The prototype of the bagor object(instance) is essensialy the prototype property of the constructor function.
+//- The prototype of the bagor object(instance) is essentially the prototype property of the constructor function.
 // console.log(Bagor.__proto__ === Person.prototype); // true
 
 // console.log(Person.prototype.isPrototypeOf(Bagor)); // true
@@ -73,7 +75,7 @@ Animal.prototype.setSound = function (str) {
   this.sound = str;
   console.log(this);
 };
-cat.setSound('miyawuu...');
+cat.setSound('m i y a w u u...');
 
 console.log(Animal);
 
@@ -152,7 +154,7 @@ console.dir(jessica);
 console.dir(jessica.__proto__);
 
 // we can also do
-// PersonCl.prototype.species = 'homo sapien';
+// PersonCl.prototype.species = 'homo sapiens';
 // console.log(jessica.hasOwnProperty('species')); //false
 // PersonCl.prototype.greet() {
 //   console.log(`Hey ${firstName}`);
@@ -162,7 +164,7 @@ console.dir(jessica.__proto__);
 1ST) classes are not hoisted
 2ND) just like functions classes are first-class citizens. 
 i.e we can pass classes to function and also return them from functions.
-3RD) the body of a class is always excuted in strict mode.
+3RD) the body of a class is always executed in strict mode.
 
  */
 
@@ -179,7 +181,7 @@ const account = {
   },
 };
 
-account.latest; // WE DONOT NEED TO CALL `latest` METHOD.
+account.latest; // WE DO NOT NEED TO CALL `latest` METHOD.
 account.latest = 50;
 // console.log(account.movements);
 
